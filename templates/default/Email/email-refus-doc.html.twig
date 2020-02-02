@@ -1,0 +1,14 @@
+<h3>Bonjour {{ prenom | capitalize }} {{ nom }},</h3>
+
+<p>Ce mail vous informe que votre demande de reprographie <a href="{{ path('page_une_demande_par_la_doc', {'numeroReprographie' : num_repro}) }}"><span style="font-weight: bold;   ">N°{{ num_repro }}</span></a> a été refusée pour le motif suivant :</p>
+
+{% if motif %}
+    <span style="font-weight: bold;">- {{ motif }}</span>
+{% else %}
+    <span style="font-weight: bold;">- Aucun motif.</span>
+{% endif %}
+<br>
+<br>
+Cordialement,
+<br>
+Pôle DOC.

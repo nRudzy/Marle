@@ -1,0 +1,402 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+        var $container = $('tbody.contientDocs');
+
+        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+        var index = $container.find(':input').length;
+
+        // Nombre de documents déjà existants
+        var nbDocsDejaPresents = $('#tableauRepro tbody tr').length;
+
+        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+        $('#ajoute_document').click(function(e) {
+            ajouterDocument($container);
+            $('.tabRepro').show();
+
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            return false;
+        });
+
+        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+        if (index === 0) {
+        } else {
+            // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+            $container.children('div').each(function() {
+                ajouterBoutonSupprimer($(this));
+            });
+        }
+
+        // La fonction qui ajoute un formulaire ContientDocCoteUtilisateurType
+        function ajouterDocument($container) {
+            // Dans le contenu de l'attribut « data-prototype », on remplace :
+            // - le texte "__name__label__" qu'il contient par le label du champ
+            // - le texte "__name__" qu'il contient par le numéro du champ
+            var template = $container.attr('data-prototype')
+                .replace(/__name__label__/g, 'Document n°' + (index+1))
+                .replace(/__name__/g,        index)
+            ;
+
+            // On crée un objet jquery qui contient ce template
+            var $prototype = $(template);
+
+            // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+            ajouterBoutonSupprimer($prototype);
+
+            // On ajoute le prototype modifié à la fin de la balise <div>
+            $container.append($prototype);
+
+            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+            index++;
+
+            var addition = nbDocsDejaPresents + index;
+
+            // Si on arrive au nombre max de document par DT, on désactive le bouton d'ajout
+            if(addition === 5){
+                document.getElementById("ajoute_document").disabled = true;
+            }
+
+        }
+
+        // La fonction qui ajoute un lien de suppression d'une catégorie
+        function ajouterBoutonSupprimer($prototype) {
+            // Création du lien
+            var $deleteLink = $('<a href="#" class="btn btn-danger" style="width: 100%;"><i class="fas fa-trash-alt"></i></a>');
+
+            // Ajout du lien
+            $prototype.append($deleteLink);
+
+            // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+            $deleteLink.click(function(e) {
+                $prototype.remove();
+
+                index--;
+                document.getElementById('ajoute_document').disabled = false;
+
+                if(index === 0){
+                    $('.tabRepro').hide();
+                }
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+        }
+    });
+</script>
+
+    <script>
+        $(function() {
+            $('#appbundle_reprographie_lieuReception').change(function(){
+                $('.message_pilotimmo').hide();
+                $('#' + $(this).val()).show();
+            });
+        });
+    </script>
+{% endblock %}
+
+{% macro printContientDocsBlock(contientDocs) %}
+    <tr>
+        <td>
+            {{ form_widget(contientDocs.nomDocument) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.refDocument) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.indice) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.typeDocument) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.tampon) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.couleur) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.nbExemplaireA3) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.nbExemplaireA4) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.nbExemplaireA5) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.nbExemplaireA0) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.rectoVerso) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.support) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.nbTrous) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.reliement) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.agrafes) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.pliure) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.massicotage) }}
+        </td>
+        <td>
+            {{ form_widget(contientDocs.plastification) }}
+        </td>
+    </tr>
+{% endmacro %}
+
+{% import _self as formMacros %}
+
+
+{% block body %}
+
+    <div class="histo_perso_titre">Edition de la demande {{ repro.getNumeroReprographie }}</div>
+
+
+    <div class="histo_perso_bulle_recap">
+        <span class="items_hpbr">Date de rendu : {{ repro.getDeadline | date('d/m/Y') }}</span>
+        {% if repro.momentJournee == 'M' %}<span class="items_hpbr">Matin</span>{% else %}<span class="items_hpbr">Après-Midi</span>{% endif %}
+        {% if repro.lieuReception == 'Courrier' %}
+            <span class="items_hpbr">Lieu de réception : PILOTIMMO / Courrier interne</span>
+        {% else %}
+            <span class="items_hpbr">Lieu de réception : {{ repro.getLieuReception }}</span>
+        {% endif %}
+        <span class="items_hpbr">Demandeur : {{ repro.getNni.getNom }} {{ repro.getNni.getPrenom | capitalize }}</span>
+        <span class="items_hpbr">Nature des documents : {{ repro.typeDocument }}</span>
+        {% if repro.filigrane != 'Aucun' %}<span class="items_hpbr">Filigrane : {{ repro.filigrane }}</span>{% endif %}
+        <span class="items_hpbr_dernier">{% if repro.estUrgence %}<td>Urgent</td>{% else %}<td>Non urgent</td>{% endif %}</span>
+    </div>
+    {% if nb_doc > 0 %}
+        <div class="container alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-circle"></i> Vous ne pouvez ajouter plus que <strong>{{ nb_doc }}</strong> documents à votre demande.
+        </div>
+    {% endif %}
+    {% if nb_doc == 0 %}
+        <div class="container alert alert-info" role="alert">
+            <i class="fas fa-exclamation-circle"></i> Vous ne pouvez plus ajouter de documents à votre demande.
+        </div>
+    {% endif %}
+    {% if nb_doc < 0 %}
+        <div class="container alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> Vous avez ajouté trop de documents. Pour avoir une demande valide, veuillez n'en ajouter que cinq.
+        </div>
+    {% endif %}
+
+
+    {{ form_start(form) }}
+
+    <table id="tableauTitre" class="tableauTitre">
+        <thead>
+        <tr>
+            <th scope="col" width="40%">Titre de la demande</th>
+            <th scope="col">Moment de la journée</th>
+            <th scope="col">Urgence ?</th>
+            <th scope="col">Lieu de réception</th>
+            <th scope="col">Service</th>
+            {% if app.token.roles.0.role != 'ROLE_USER'%}
+                <th scope="col">Filigrane</th>
+            {% else %}
+                <td style="display: none;">{{ form_widget(form.filigrane) }}</td>
+            {% endif %}
+            <th scope="col">Ajouter</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form.titre, { 'attr': {'size': '35'} }) }}</td>
+            <td>{{ form_widget(form.momentJournee) }}</td>
+            <td>{{ form_widget(form.estUrgence) }}</td>
+            <td>{{ form_widget(form.lieuReception) }}</td>
+            <td>{{ form_widget(form.serviceDemandeur) }}</td>
+            {% if app.token.roles.0.role != 'ROLE_USER'%}
+                <th scope="col">{{ form_widget(form.filigrane) }}</th>
+            {% endif %}
+            <td><button id="ajoute_document" class="btn btn-info">+</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table id="tableauRepro" class="tableauRepro">
+        <thead>
+        <tr>
+            <th scope="col">Référence</th>
+            <th scope="col">Indice</th>
+            <th scope="col">Tampon</th>
+            <th scope="col">Couleur</th>
+            <th scope="col">Nombre A3</th>
+            <th scope="col">Nombre A4</th>
+            <th scope="col">Nombre A5</th>
+            <th scope="col">Nombre A0</th>
+            <th scope="col">Recto/verso</th>
+            <th scope="col">Support</th>
+            <th scope="col">Perforé</th>
+            <th scope="col">Relié</th>
+            <th scope="col">Agrafé</th>
+            <th scope="col">Plié</th>
+            <th scope="col">Massicoté</th>
+            <th scope="col">Plastifié</th>
+            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            <th scope="col">Documentation satellite</th>
+            {% endif %}
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for cd in contientDocs %}
+            <tr>
+                {% if repro.getIdTaxonomie.codeTaxonomie == 'RPD' or repro.getIdTaxonomie.codeTaxonomie == 'RAM' or repro.getIdTaxonomie.codeTaxonomie == 'RAME' or repro.getIdTaxonomie.codeTaxonomie == 'CSP' %}
+                    <td>{{cd.refDocument}}</td>
+                {% else %}
+                    {% if cd.nomDocument %}
+                        <td><a href="{{ asset('uploads/brochures/' ~ cd.nomDocument) }}" target="_blank">{{ cd.refDocument}}</a></td>
+                    {% else %}
+                        <td>{{cd.refDocument}}</td>
+                    {% endif %}
+                {% endif %}
+                <td>{{ cd.indice }}</td>
+                <td>{{ cd.tampon }}</td>
+                {% if cd.couleur %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                <td>{{ cd.nbExemplaireA3 }}</td>
+                <td>{{ cd.nbExemplaireA4 }}</td>
+                <td>{{ cd.nbExemplaireA5 }}</td>
+                <td>{{ cd.nbExemplaireA0 }}</td>
+                <td>{{ cd.rectoVerso }}</td>
+                <td>{{ cd.support }}</td>
+                <td>{{ cd.nbTrous }} trous</td>
+                <td>{{ cd.reliement }}</td>
+                {% if cd.agrafes and cd.agrafes == 1 %}
+                    <td>{{ cd.agrafes }} point</td>
+                {% else %}
+                    <td>{{ cd.agrafes }} points</td>
+                {% endif %}
+
+                {% if cd.pliure == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                {% if cd.massicotage == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                {% if cd.plastification == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+
+                {% if app.token.roles.0.role != 'ROLE_USER'%}
+                <td>
+                    {% for documentsDansContientDocs in cd.documents.values %}
+                        {% if documentsDansContientDocs.docsats.values is empty %}
+                            Aucune documentation satellite.
+                        {% endif %}
+                        {% for docsatDansDocuments in documentsDansContientDocs.docsats.values %}
+                            {% set origine = docsatDansDocuments.getOrigine %}
+                            {% set docsat = docsatDansDocuments.getIdSatellite.getCodeSatellite %}
+                                {% if origine == 'DOC' %}
+                                    <span class="blue_docsat">{{ docsat }}</span>
+                                {% else %}
+                                    <span>{{ docsat }}</span>
+                                {% endif %}
+
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('page_editer_demande_un_document', {'numeroReprographie' : repro.getNumeroReprographie, 'refDocument' : cd.refDocument}) }}">
+                        <button type="button" class="btn btn-outline-dark">
+                            <i class="fas fa-edit"></i>
+                        </button></a>
+
+                    <a onclick="return confirm('Le document sera supprimé de la reprographie. Continuer ?')" href="{{ path('page_supprimer_contientdoc', {'numeroReprographie' : repro.getNumeroReprographie, 'refDocument' : cd.refDocument}) }}">
+                        <button type="button" class="btn btn-danger">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </a>
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+    <table id="tableauRepro" class="tabRepro">
+        <thead>
+        <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Référence</th>
+            <th scope="col">Indice</th>
+            <th scope="col">Type du document</th>
+            <th scope="col">Tampon</th>
+            <th scope="col">Couleur</th>
+            <th scope="col">Nombre A3</th>
+            <th scope="col">Nombre A4</th>
+            <th scope="col">Nombre A5</th>
+            <th scope="col">Nombre A0</th>
+            <th scope="col">Recto/Verso</th>
+            <th scope="col">Support</th>
+            <th scope="col">Trous</th>
+            <th scope="col">Relié</th>
+            <th scope="col">Agrafes</th>
+            <th scope="col">Plié</th>
+            <th scope="col">Massicoté</th>
+            <th scope="col">Plastifié</th>
+            <th scope="col">Action</th>
+
+        </tr>
+        </thead>
+            <tbody class="contientDocs" data-prototype="{{ formMacros.printContientDocsBlock(form.contientDocs.vars.prototype)|e('html_attr') }}">
+        </tbody>
+    </table>
+
+    <div id="Courrier" role="alert" class="alert alert-info message_pilotimmo" style="display:none;">
+        <i class="fas fa-exclamation-circle"></i> Si votre demande concerne pilotimmo, veuillez renseigner en <strong>observations</strong>
+        votre bâtiment, étage et numéro de bureau.
+    </div>
+    <br />
+
+    <div style="width: 80%;margin:auto;">
+        {{ form_widget(form.observations) }}
+    </div>
+    <br />
+
+
+
+        <div class="boutons_submit">
+            <a href="{{ path('page_accueil') }}">
+                <button style="display: inline-block;" type="button" class="btn btn-secondary btn-sm">Retour</button>
+            </a>
+            {{ form_widget(form.save) }}
+            {{ form_widget(form.submit) }}
+        </div>
+
+    {{ form_end(form) }}
+
+
+
+{% endblock %}

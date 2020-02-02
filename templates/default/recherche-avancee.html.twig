@@ -1,0 +1,218 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+
+    <script>
+        $(document).ready(function() {
+            (function($) {
+                $("#tableauRepro tbody").addClass("search");
+                $('#filter_reference').keyup(function() {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.search tr ').hide();
+
+                    //Filtre l'objet jquery récursivement jusqu'à avoir le resultat
+                    $('.search tr ').filter(function(i, v) {
+                        //Récupère le 3eme élément qui est réference
+                        var $t = $(this).children(":eq(" + "4" + ")");
+                        return rex.test($t.text());
+                    }).show();
+                })
+
+            }(jQuery));
+
+            (function($) {
+                $("#tableauRepro tbody").addClass("search");
+                $('#filter_demandeur').keyup(function() {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.search tr ').hide();
+
+                    //Filtre l'objet jquery récursivement jusqu'à avoir le resultat
+                    $('.search tr ').filter(function(i, v) {
+                        //Récupère le 4eme élément qui est demandeur
+                        var $t = $(this).children(":eq(" + "5" + ")");
+                        return rex.test($t.text());
+                    }).show();
+                })
+
+            }(jQuery));
+
+            /* Pour le filtre urgent */
+            $("input[name='filter_urgent']").change(function () {
+                var classes = [];
+
+                $("input[name='filter_urgent']").each(function () {
+                    if ($(this).is(":checked")) { classes.push('.' + $(this).val()); }
+                });
+
+                if (classes === "") {
+                    $("#tableauRepro tbody tr").show();
+                } else {
+                    $("#tableauRepro tbody tr").hide();
+
+                    $("#tableauRepro tr").each(function () {
+                        var show = true;
+                        var row = $(this);
+                        classes.forEach(function () {
+                            if (row.children().eq(10).text() === "Non urgent") { show = false; }
+                        });
+                        if (show) { row.show(); }
+                    });
+                }
+            });
+
+
+        });
+    </script>
+
+    <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function(){
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function(){ div.style.display = "none"; }, 600);
+            }
+        }
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+    {% if doit_afficher_alerte_dates %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Attention !</strong> La date de début doit être inférieure à la date de fin.
+        </div>
+    {% endif %}
+
+
+    <div class="div_titre_du_tableau">
+        <span class="titre_du_tableau">Recherche avancée</span>
+    </div>
+    <div class="tous_les_filtres">
+
+            <div class="petits_filtres">
+                Reference : <input maxlength="12" aria-label="filter_reference" size="13" type="text" name="filter_reference" id="filter_reference"  >
+                Demandeur : <input aria-label="filter_demandeur" type="text" name="filter_demandeur" id="filter_demandeur">
+                Urgent ? <input aria-label="filter_urgent" type="checkbox" name="filter_urgent" id="filter_urgent">
+
+                <div style="margin-top: 10px; ">
+                    <a href="{{ path('page_recherche_idol') }}">
+                        <button type="button" class="btn btn-sm mon-bouton-edf">
+                            Demandes IDOL
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="recherche_par_date" style="">
+                {{ form_start(dates) }}
+
+                <label>Filtrer les demandes entre le</label><br/>
+                {{ form_widget(dates.date_debut) }}
+                et le
+                {{ form_widget(dates.date_fin) }}
+
+                {{ form_widget(dates.radio) }}
+
+                {{ form_widget(dates.submit) }}
+
+                {{ form_end(dates) }}
+            </div>
+
+
+    </div>
+
+    <table id="tableauRepro">
+        <thead>
+        <tr>
+            <th scope="col">Statut</th>
+            <th scope="col">Date</th>
+            <th scope="col">A réaliser avant le</th>
+            <th scope="col">Type</th>
+            <th scope="col">Référence</th>
+            <th scope="col">Demandeur</th>
+            <th scope="col">Service</th>
+            <th scope="col">Documents</th>
+            <th scope="col">Lieu de réception</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Urgence</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for repro in repros %}
+
+            <tr>
+                {% if repro.getIdTaxonomie.codeTaxonomie == 'RPD' or repro.getIdTaxonomie.codeTaxonomie == 'RAM' or repro.getIdTaxonomie.codeTaxonomie == 'RAME' or repro.getIdTaxonomie.codeTaxonomie == 'CSP' %}
+                    <td align="center"><i class="fas fa-circle" style="color: green;"></i></td>
+                {% elseif repro.getIdTaxonomie.codeTaxonomie == 'APD' or repro.getIdTaxonomie.codeTaxonomie == 'DRD' or repro.getIdTaxonomie.codeTaxonomie == 'DRP' or repro.getIdTaxonomie.codeTaxonomie == 'IDL' %}
+                    <td align="center"><i class="fas fa-circle" style="text-align: center; color: red;"></i></td>
+                {% elseif date(repro.deadline|date('F j, Y')) < date("now"|date('F j, Y')) %}
+                    <td align="center"><i class="fas fa-circle" style="text-align: center; color: orange;"></i></td>
+                {% else %}
+                    <td align="center"><i class="fas fa-circle" style="text-align: center; color: #1f2d78;"></i></td>
+                {% endif %}
+                <td>{{ repro.getDateDemande | date('d/m/Y')}}</td>
+                <td>{{ repro.getDeadline | date('d/m/Y') }}</td>
+                <td>{{ repro.typeDocument }}</td>
+                <td>{{ repro.getNumeroReprographie }}</td>
+                <td>{{ repro.getNni.getNom }} {{ repro.getNni.getPrenom | capitalize }}</td>
+                <td>{{ repro.getServiceDemandeur }}</td>
+                <td>
+                    {% for cd in repro.contientDocs %}
+                        <div>{{ cd.refDocument }}</div>
+                    {% endfor %}
+                </td>
+                <td>{{ repro.getLieuReception }}</td>
+                <td>{{ repro.getIdTaxonomie.getLibelle }}</td>
+
+                {% if repro.estUrgence %}
+                    <td>Urgent</td>
+                {% else %}
+                    <td>Non urgent</td>
+                {% endif %}
+
+                <td>
+                    {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD') and (app.user == repro.nni.nni) %}
+                        <a href="{{ path('page_editer_demande', {'numeroReprographie' : repro.getNumeroReprographie}) }}">
+                            <button type="button" class="btn btn-outline-dark">
+                                <i class="fas fa-edit"></i>
+                            </button></a>
+                    {% else %}
+                        <a href="{{ path('page_une_demande', {'numeroReprographie' : repro.getNumeroReprographie}) }}">
+                            <button type="button" class="btn btn-outline-dark">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </a>
+                    {% endif %}
+                    {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD' or repro.getIdTaxonomie.codeTaxonomie == 'APD' or repro.getIdTaxonomie.codeTaxonomie == 'IDL') and (app.user == repro.nni.nni) %}
+                        <a href="{{ path('page_supprimer_repro', {'numeroReprographie' : repro.getNumeroReprographie}) }}">
+                            <button type="button" class="btn btn-danger">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </a>
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <span class="legende_accueil">
+        <i class="fas fa-circle" style="color: #1f2d78;"></i> = Demande en cours de traitement,
+        <i class="fas fa-circle" style="color: green;"></i> = Demande terminée,
+        <i class="fas fa-circle" style="text-align: center; color: orange;"></i> = Demande en retard,
+        <i class="fas fa-circle" style="color: red;"></i> = Demande refusée
+    </span>
+
+
+
+{% endblock %}

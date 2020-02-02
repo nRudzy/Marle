@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+        <div class="histo_perso_titre">Edition du document {{ refDocument }}</div>
+
+        {{ form_start(form) }}
+
+        <table id="tableauRepro" class="tableauRepro">
+        <thead>
+        <tr>
+                <th scope="col">Nom du fichier</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Indice</th>
+                <th scope="col">Type du document</th>
+                <th scope="col">Tampon</th>
+                <th scope="col">Couleur</th>
+                <th scope="col">Nombre A3</th>
+                <th scope="col">Nombre A4</th>
+                <th scope="col">Nombre A5</th>
+                <th scope="col">Nombre A0</th>
+                <th scope="col">Recto/verso</th>
+                <th scope="col">Support</th>
+                <th scope="col">Perforé</th>
+                <th scope="col">Relié</th>
+                <th scope="col">Agrafé</th>
+                <th scope="col">Plié</th>
+                <th scope="col">Massicoté</th>
+                <th scope="col">Plastifié</th>
+        </tr>
+        </thead>
+        <tbody>
+                <tr>
+                        <td>
+                                <form>
+                                        <input aria-label="" type="text" placeholder="{{ nom_du_doc }}" disabled>
+                                </form>
+                        </td>
+                        <td>{{ form_widget(form.refDocument) }}</td>
+                        <td>{{ form_widget(form.indice) }}</td>
+                        <td>{{ form_widget(form.typeDocument) }}</td>
+                        <td>{{ form_widget(form.tampon) }}</td>
+                        <td>{{ form_widget(form.couleur) }}</td>
+                        <td>{{ form_widget(form.nbExemplaireA3) }}</td>
+                        <td>{{ form_widget(form.nbExemplaireA4) }}</td>
+                        <td>{{ form_widget(form.nbExemplaireA5) }}</td>
+                        <td>{{ form_widget(form.nbExemplaireA0) }}</td>
+                        <td>{{ form_widget(form.rectoVerso) }}</td>
+                        <td>{{ form_widget(form.support) }}</td>
+                        <td>{{ form_widget(form.nbTrous) }}</td>
+                        <td>{{ form_widget(form.reliement) }}</td>
+                        <td>{{ form_widget(form.agrafes) }}</td>
+                        <td>{{ form_widget(form.pliure) }}</td>
+                        <td>{{ form_widget(form.massicotage) }}</td>
+                        <td>{{ form_widget(form.plastification) }}</td>
+                </tr>
+        </tbody>
+        </table>
+
+        <div class="boutons_submit">
+                <a href="{{ path('page_editer_docsats_par_doc', {'numeroReprographie' : repro.numeroReprographie, 'refDocument' : refDocument}) }}">
+                        <button type="button" class="btn btn-outline-dark btn-sm">
+                                <i class="fas fa-satellite-dish"></i>
+                        </button></a>
+
+        {{ form_widget(form.retour) }}
+        {{ form_widget(form.submit) }}
+        </div>
+        {{ form_end(form) }}
+
+
+
+{% endblock %}

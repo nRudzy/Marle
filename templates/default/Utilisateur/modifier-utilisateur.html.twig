@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div class="div_titre_du_tableau_docsat">
+        <span class="titre_du_tableau">Edition de l'agent {{ user.getPrenom | capitalize }} {{ user.getNom }}</span>
+    </div>
+    {{ form_start(form) }}
+    <table id="tableauDocsat">
+        <thead>
+        <tr>
+            <th scope="col">NNI</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Rôle</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ user.getNni }}</td>
+            <td>{{ user.getNom }}</td>
+            <td>{{ user.getPrenom }}</td>
+            <td>{{ user.getRole }}</td>
+            <td class="last">
+
+                {{ form_widget(form.role) }}
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br />
+
+
+    <div class="boutons_submit_petit">
+        <a href="{{ path('page_utilisateurs') }}">
+            <button style="margin-left: 45px;" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-long-arrow-alt-left"></i> Retour</button>
+        </a>
+        {{ form_widget(form.modify) }}
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

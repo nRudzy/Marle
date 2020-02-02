@@ -1,0 +1,378 @@
+@import url("globaux.css");
+@import url("structure.css");
+
+/****** Form ? *****/
+
+input:focus {
+    outline:none;
+    border:1px solid #e2630f;
+    box-shadow:0 0 5px #e2630f;
+}
+
+textarea{
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 5px;
+    transition: border-color .5s ease-out;
+}
+
+textarea:focus{
+    outline:none;
+    border:1px solid #e2630f;
+    box-shadow:0 0 5px #e2630f;
+}
+
+input[type=text], input[type=number], input[type=password] {
+    border: 1px solid grey;
+    border-radius: 5px;
+    transition: border-color .5s ease-out;
+}
+
+input[type=text]:focus, input[type=number]:focus, input[type=password]:focus {
+    outline:none;
+    border:1px solid #e2630f;
+    box-shadow:0 0 5px #e2630f;
+}
+
+#tableauRepro input[type=number]{
+    width: 60px;
+}
+
+ .mon-bouton-edf{
+     color: white;
+     background-color: var(--main-color);
+ }
+
+.mon-bouton-edf:hover{
+    border: 1px solid var(--main-color);
+    color: black;
+    background-color: #e2630f;
+}
+
+#tableauRecapRepro input{
+    width: 100%;
+}
+
+#tableauRecapRepro td, #tableauRecapRepro th{
+    width: 5%;
+}
+
+/***** end form ****/
+/***** Boutons sous les tableaux ******/
+.boutons_submit{
+    width: 95%;
+    text-align: right;
+}
+
+.boutons_submit_bis{
+    float: left;
+    margin-left: 90px;
+}
+
+.boutons_submit_petit{
+    width: 85%;
+    text-align: right;
+}
+
+.boutons_refus{
+    width: 95%;
+    text-align: right;
+}
+/***** Fin Boutons sous les tableaux ******/
+/***** Tableaux généraux ******/
+.tous_les_filtres{
+    background-color: #b6b7b7;
+    padding: 10px 10px 10px 10px;
+    margin:auto;
+    width: 90%;
+    border: 1px solid #000000;
+    overflow: hidden;
+}
+
+.tous_les_filtres_docsat{
+    background-color: #b6b7b7;
+    padding: 10px 10px 10px 10px;
+    margin:auto;
+    width: 70%;
+    border: 1px solid #000000;
+}
+
+.tous_les_filtres input,.tous_les_filtres_docsat input{
+    margin-right: 5px;
+}
+
+table {
+    border:1px solid #000000;
+    margin:auto;
+}
+
+#tableauRepro{
+    margin-bottom: 50px;
+    width:90%;
+
+}
+#tableauUtilisateurs{
+    margin-bottom: 50px;
+    width:90%;
+}
+
+#tableauRecapRepro{
+    width: 90%;
+}
+
+#tableauDocsat{
+    width: 70%;
+}
+
+table li {
+    list-style-type: none;
+    text-align: left;
+    margin: -1px -20px -2px;
+}
+
+thead, tfoot {
+    background-color: #b6b7b7;
+    border: 1px solid #000000;
+}
+
+th {
+    border:1px solid #000000;
+    padding:5px;
+    font-size: 90%;
+    text-align: center;
+}
+td {
+    font-size: 90%;
+    border: 1px solid #000000;
+    padding: 5px;
+    text-align: center;
+
+}
+
+.div_titre_du_tableau{
+    border: 1px solid black;
+    width: 90%;
+    margin: auto;
+    padding: 8px 8px 8px 8px;
+}
+
+.div_titre_du_tableau_docsat{
+    border: 1px solid black;
+    width: 70%;
+    margin: auto;
+    padding: 8px 8px 8px 8px;
+}
+
+
+.titre_du_tableau{
+    color: white;
+    font-weight: bold;
+    background-color: var(--main-color);
+    padding: 5px 5px 5px 5px;
+    width: 100%;
+    display: block;
+}
+
+.titre_du_tableau2{
+    color: white;
+    font-weight: bold;
+    background-color: var(--main-color);
+    padding: 5px 5px 5px 5px;
+    width: 100%;
+    display: block;
+    text-align: right;
+}
+
+/*****/
+
+#tableauTitre td, #tableauTitre th{
+    text-align: center;
+    display: table-cell;
+    vertical-align: center;
+}
+
+.tabRepro{
+    display: none;
+}
+/***** Fin Tableaux généraux ******/
+
+/***** Page Perso ******/
+.histo_perso_titre{
+    color: #7a7a7a;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.histo_perso_bulle_recap{
+    color: #000000;
+    font-weight: bold;
+    border: 2px solid #000000;
+    border-radius: 15px 15px 15px 15px;
+    text-align: center;
+    width: 60%;
+    margin: auto auto 30px auto ;
+
+    padding: 10px 0 10px 0;
+}
+
+.items_hpbr{
+    margin-right: 15px;
+    color: var(--main-color);
+
+}
+
+.items_hpbr_dernier{
+    margin-right: 15px;
+    color: var(--main-color);
+}
+/***** Fin Page Perso ******/
+/***** Utilisateur ******/
+.bloc_supp_utilisateur{
+    border: 2px solid #000000;
+    border-radius: 10px 10px 10px 10px;
+    width: 30%;
+    margin: auto;
+    background-color: #e6eaec;
+    text-align: center;
+    font-weight: bold;
+}
+
+.titre_supp_utilisateur{
+    padding-top: 15px;
+
+}
+
+.presentation_utilisateur{
+    padding-top: 15px;
+}
+/***** Fin Utilisateur ******/
+
+/***** Dropdown ******/
+.dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #e6eaec;
+    min-width: 200px;
+    overflow: auto;
+    box-shadow: 0px 8px 1px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: var(--main-color);
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+}
+
+.show {display: block;}
+/***** Fin Dropdown ******/
+
+.contientDocs td{
+    text-align: center;
+}
+
+
+/********************* alert *********************/
+.alert {
+    padding: 15px;
+    opacity: 1;
+    transition: opacity 0.6s;
+    width: 90%;
+    margin : auto;
+}
+
+.alert.info {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.alert-warning {
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.alert-info {
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 30%;
+    margin-left: 90px;
+}
+
+.alert-success {
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 30%;
+    margin-left: 90px;
+}
+
+.alert-danger {
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 30%;
+    margin-left: 90px;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: #000000;
+}
+
+/********************* fin alert *********************/
+
+/********************* recherche div *********************/
+.petits_filtres{
+float:left;
+}
+
+.recherche_par_date{
+    float: right;
+}
+
+/********************* fin recherche div *********************/
+
+/********************* ADMIN *********************/
+.contenu_admin{
+    width: 90%;
+    margin: auto;
+}
+/********************* FIN ADMIN *********************/
+
+.observations{
+    width: 90%;
+    margin: auto;
+}
+
+.blue_docsat{
+    color: var(--main-color);
+    text-decoration: underline var(--main-color);
+}
+
+.message_pilotimmo{
+    width: 90%;
+    margin: auto;
+}

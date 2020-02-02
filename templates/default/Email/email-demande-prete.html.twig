@@ -1,0 +1,13 @@
+<h3>Bonjour {{ prenom | capitalize }} {{ nom }},</h3>
+
+<p>Ce mail vous informe que votre demande de reprographie <a href="{{ path('page_une_demande_par_la_doc', {'numeroReprographie' : num_repro}) }}"><span style="font-weight: bold;   ">N°{{ num_repro }}</span></a>
+    <strong>est prête</strong>.</p>
+
+<p>Lieu de retrait de la reprographie: {{ lieu_de_renvoie }}.</p>
+
+<p>Dans le cas où votre demande concernait un PDF, vous le retrouverez à cette adresse : \\Atlas.edf.fr\co\38sal-dpn\projets.005\documentum.002, dans le dossier "RETOUR REPRO". </p>
+<br>
+<br>
+Cordialement,
+<br>
+Espace Reprographie.

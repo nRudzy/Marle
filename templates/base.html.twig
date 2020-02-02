@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr" xml:lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}DOCADIFF{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('mycss/application.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/all.css') }}">
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}" />
+
+
+</head>
+<body>
+
+<div class="site">
+
+
+    <header>
+        {% include 'header.html.twig' %}
+    </header>
+
+        {% include 'header_bis.html.twig' %}
+        {% include 'header_ter.html.twig' %}
+
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer>
+        {% include 'footer.html.twig' %}
+    </footer>
+
+</div>
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('css/fontawesome/js/all.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+
+
+</body>
+</html>

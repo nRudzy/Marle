@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+
+    <script>
+        $(document).ready(function() {
+            (function($) {
+                $("#tableauUtilisateurs tbody").addClass("search");
+                $('#filter_nni').keyup(function() {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.search tr ').hide();
+
+                    //Filtre l'objet jquery récursivement jusqu'à avoir le resultat
+                    $('.search tr ').filter(function(i, v) {
+                        //Récupère le 1er élément qui est NNI
+                        var $t = $(this).children(":eq(" + "0" + ")");
+                        return rex.test($t.text());
+                    }).show();
+                })
+
+            }(jQuery));
+
+            (function($) {
+                $("#tableauUtilisateurs tbody").addClass("search");
+                $('#filter_nom').keyup(function() {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.search tr ').hide();
+
+                    //Filtre l'objet jquery récursivement jusqu'à avoir le resultat
+                    $('.search tr ').filter(function(i, v) {
+                        //Récupère le 2eme élément qui est Nom
+                        var $t = $(this).children(":eq(" + "1" + ")");
+                        return rex.test($t.text());
+                    }).show();
+                })
+
+            }(jQuery));
+
+            (function($) {
+                $("#tableauUtilisateurs tbody").addClass("search");
+                $('#filter_prenom').keyup(function() {
+                    var rex = new RegExp($(this).val(), 'i');
+                    $('.search tr ').hide();
+
+                    //Filtre l'objet jquery récursivement jusqu'à avoir le resultat
+                    $('.search tr ').filter(function(i, v) {
+                        //Récupère le 3eme élément qui est Prenom
+                        var $t = $(this).children(":eq(" + "2" + ")");
+                        return rex.test($t.text());
+                    }).show();
+                })
+
+            }(jQuery));
+
+        });
+    </script>
+
+    <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function(){
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function(){ div.style.display = "none"; }, 600);
+            }
+        }
+    </script>
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% if doit_afficher_agent_null %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Attention !</strong> Aucun agent n'a été trouvé.
+        </div>
+    {% endif %}
+
+    {% if doit_afficher_agent_cree %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Succès !</strong> L'agent a été créé.
+        </div>
+    {% endif %}
+
+    <div class="div_titre_du_tableau">
+        <span class="titre_du_tableau">Ensembles des utilisateurs du site</span>
+    </div>
+    <div class="tous_les_filtres">
+        NNI : <input aria-label="filter_nni" size="10" type="text" name="filter_nni" id="filter_nni">
+        Nom : <input aria-label="filter_nom" type="text" name="filter_nom" id="filter_nom">
+        Prénom : <input aria-label="filter_prenom" type="text" name="filter_prenom" id="filter_prenom">
+    </div>
+
+
+    <table id="tableauUtilisateurs">
+        <thead>
+        <tr>
+            <th scope="col">NNI</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Rôle</th>
+            <th scope="col">Actions</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for user in utilisateurs %}
+            <tr>
+                <td>{{ user.getNni }}</td>
+                <td>{{ user.getNom }}</td>
+                <td>{{ user.getPrenom | capitalize }}</td>
+                {% if user.getRole == 'ROLE_USER' %}
+                    <td>Utilisateur</td>
+                {% endif %}
+                {% if user.getRole == 'ROLE_DOC' %}
+                    <td>Agent DOC</td>
+                {% endif %}
+                {% if user.getRole == 'ROLE_REPRO' %}
+                    <td>Prestataire</td>
+                {% endif %}
+                {% if user.getRole == 'ROLE_BOTH' %}
+                    <td>Agent DOC et reprographie</td>
+                {% endif %}
+                {% if user.getRole == 'ROLE_ADMIN' %}
+                    <td>Administrateur</td>
+                {% endif %}
+                {% if user.getRole == 'ROLE_SUPER_ADMIN' %}
+                    <td>Super administrateur</td>
+                {% endif %}
+                <td>
+                    {% if user.getRole != 'ROLE_SUPER_ADMIN'%}
+                    <a href="{{ path('page_modifier_utilisateur', {'nni' : user.getNni})  }}">
+                        <button type="button" class="btn btn-outline-dark">
+                            <i class="fas fa-edit"></i>
+                        </button></a>
+                    {% endif %}
+                    {% if user.getRole != 'ROLE_SUPER_ADMIN' and user.getRole != 'ROLE_ADMIN' %}
+
+                        <a onclick="return confirm('L\'utilisateur {{ user.getNni }} sera supprimé. Continuer ?')" href="{{ path('page_supprimer_utilisateur', {'nni' : user.getNni}) }}">
+                            <button type="button" class="btn btn-danger">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {{ form_start(form) }}
+    <div class="observations">
+        <h3>Ajouter un utilisateur sur le site</h3><br/>
+        <div class="row" style="margin-left : 5px;">
+            {{ form_widget(form.nni) }}
+            {{ form_widget(form.nom) }}
+            {{ form_widget(form.prenom) }}
+            {{ form_widget(form.role) }}
+            {{ form_widget(form.ajouter) }}
+        </div>
+
+    </div>
+    {{ form_end(form) }}
+
+
+{% endblock %}

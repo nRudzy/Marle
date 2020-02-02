@@ -1,0 +1,57 @@
+/************ ARCHITECTURE SITE GLOBAL ************/
+.site{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-areas: "header" "header_bis" "header_ter" "main" "footer";
+
+}
+
+
+.site header{
+    grid-area: header;
+}
+
+.site .header_bis{
+    grid-area: header_bis;
+}
+
+.site .header_ter{
+    grid-area: header_ter;
+}
+
+.site main{
+    grid-area: main;
+}
+
+.site footer{
+    grid-area: footer;
+}
+
+.site a:link {
+    text-decoration: none;
+}
+
+/************ FIN ARCHITECTURE SITE GLOBAL ************/
+html body{
+    font-size: 0.85rem;
+}
+
+.legende_accueil{
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 80px;
+    padding-bottom: 50px;
+}
+
+@media screen and (min-width:1920px) {
+    .legende_accueil { margin-left: 90px;}
+}
+
+@media screen and (min-width:1600px) {
+    .div_titre_du_tableau_docsat { width: 80%;}
+    #tableauDocsat {width: 80%;}
+    .tous_les_filtres_docsat {width: 80%;}
+    .boutons_submit_petit {width: 90%;}
+}

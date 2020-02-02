@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function(){
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function(){ div.style.display = "none"; }, 600);
+            }
+        }
+    </script>
+{% endblock %}
+
+
+{% block body %}
+
+    {% if doit_afficher_erreur_date_supp %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Attention !</strong> Aucune reprographie n'a été trouvée pour l'année {{ annee_supp }}.
+        </div>
+    {% endif %}
+
+    {% if doit_afficher_erreur_pdf %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Impossible de générer le PDF !</strong> Aucune reprographie n'a été trouvée pour le {{ mois_pdf_form }}/{{ annee_pdf_form }}.
+        </div>
+    {% endif %}
+
+    <div id="accordion">
+        <div class="card container">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Modifier l'e-mail du pôle DOC
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    {{ form_start(form_mail_doc) }}
+                    E-mail pôle DOC :
+                    {{ form_widget(form_mail_doc.libelle) }}
+                    {{ form_widget(form_mail_doc.maj) }}
+                    {{ form_end(form_mail_doc) }}
+                </div>
+            </div>
+        </div>
+        <div class="card container">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Gérer les services
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div>
+                        {{ form_start(form_service) }}
+                        Créer un service :
+                        {{ form_widget(form_service.libelle) }}
+                        {{ form_widget(form_service.create) }}
+                        {{ form_end(form_service) }}
+                    </div>
+                    <br />
+                    {% if services %}
+                        <div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        {% for s in services %}
+                                            <td><span style="font-weight: bold;">{{ s.libelle }}</span>
+                                                <a onclick="return confirm('Le service {{ s.libelle }} sera supprimé. Continuer ?')" href="{{ path('page_administrateur_supprimer_service', {'id' : s.idTaxonomie}) }}">
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <div class="card container">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        Exporter en PDF
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    {{ form_start(form_gen_pdf_date) }}
+                    {{ form_widget(form_gen_pdf_date.moispdf) }}
+                    {{ form_widget(form_gen_pdf_date.anneepdf) }}
+                    {{ form_widget(form_gen_pdf_date.generate) }}
+                    {{ form_end(form_gen_pdf_date) }}
+                </div>
+            </div>
+        </div>
+        <div class="card container">
+            <div class="card-header" id="headingFour">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                        Purge de la base de donnée par année
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    {{ form_start(form_supprimer_bdd) }}
+                    {{ form_widget(form_supprimer_bdd.annee) }}
+                    {{ form_widget(form_supprimer_bdd.delete) }}
+                    {{ form_end(form_supprimer_bdd) }}
+                </div>
+            </div>
+        </div>
+        <div class="card container">
+            <div class="card-header" id="headingFive">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        Délai de traitement d'une reprographie
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    {{ form_start(form_delai) }}
+                    Délai de traitement :
+                    {{ form_widget(form_delai.libelle) }}
+                    {{ form_widget(form_delai.delai) }}
+                    {{ form_end(form_delai) }}
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+{% endblock %}

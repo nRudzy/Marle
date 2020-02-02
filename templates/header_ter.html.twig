@@ -1,0 +1,40 @@
+{#{% if app.user %}#}
+<div class="header_ter">
+    <ul class="main-navigation">
+        <li><a href="{{ path('page_accueil') }}"><i class="fas fa-home"></i></a></li>
+        <li><a href="#">Demander reprographie</a>
+            <ul>
+                <li><a href="{{ path('page_reprographie_divers') }}">Divers</a></li>
+                <li><a href="{{ path('page_reprographie_bds') }}">Besoin du service</a></li>
+                <li><a href="{{ path('page_reprographie_drt') }}">DRT</a></li>
+                <li><a href="{{ path('page_reprographie_dse_plan') }}">DSE / Plan</a></li>
+                <li><a href="{{ path('page_reprographie_astreinte') }}">Astreinte</a></li>
+                <li><a href="{{ path('page_reprographie_ape') }}">APE</a></li>
+            </ul>
+        </li>
+            <li><a href="#">Consulter</a>
+                <ul>
+                    <li><a href="#">Reprographies <span> <i class="fas fa-caret-right"></i> </span> </a>
+                        <ul>
+                            <li><a href="{{ path('page_demandes_doc') }}">A valider</a></li>
+                            <li><a href="{{ path('page_demandes_presta') }}">A facturer</a></li>
+                        </ul>
+                    </li>
+                        <li><a href="{{ path('page_recherche_avancee') }}">Recherche avancée</a></li>
+                </ul>
+            </li>
+
+                <li><a href="#">Administrateur</a>
+                <ul>
+                    <li><a href="#">Gérer <span id="spanbis"> <i class="fas fa-caret-right"></i> </span> </a>
+                        <ul>
+                            <li><a href="{{ path('page_utilisateurs') }}">Utilisateurs</a></li>
+                            <li><a href="{{ path('page_administrateur') }}">Paramètres du site</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+
+    </ul>
+</div>
+{#{% endif %}#}

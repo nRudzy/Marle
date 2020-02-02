@@ -1,0 +1,315 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script>
+        $('#check_all').click(function() {
+            $('.tab_doc input[type="checkbox"]').prop('checked', true);
+        });
+
+        $('#uncheck_all').click(function() {
+            $('.tab_doc input[type="checkbox"]').prop('checked', false);
+        });
+
+        $('#check_all_presta').click(function() {
+            $('.tab_presta input[type="checkbox"]').prop('checked', true);
+        });
+
+        $('#uncheck_all_presta').click(function() {
+            $('.tab_presta input[type="checkbox"]').prop('checked', false);
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="histo_perso_titre">Ajout des documentations satellites pour {{ refDocument }}</div>
+
+
+    <div class="div_titre_du_tableau_docsat">
+        <span class="titre_du_tableau">Documentations satellites requises pour {{ refDocument }} côté DOC</span>
+    </div>
+
+    <div class="tous_les_filtres_docsat">
+        <button type="button" id='check_all' class="btn mon-bouton-edf btn-sm">Selectionner tout</button>
+        <button type="button" id='uncheck_all' class="btn mon-bouton-edf btn-sm">Déselectionner tout</button>
+    </div>
+
+    {{ form_start(form) }}
+    <table id="tableauDocsat" class="tab_doc">
+        <thead>
+        <tr>
+            <th scope="col">{{ form_label(form.IDC) }}</th>
+            <th scope="col">{{ form_label(form.IDD) }}</th>
+            <th scope="col">{{ form_label(form.IDM) }}</th>
+            <th scope="col">{{ form_label(form.SAA) }}</th>
+            <th scope="col">{{ form_label(form.SAE) }}</th>
+            <th scope="col">{{ form_label(form.SAF) }}</th>
+            <th scope="col">{{ form_label(form.SAG) }}</th>
+            <th scope="col">{{ form_label(form.SAH) }}</th>
+            <th scope="col">{{ form_label(form.SAI) }}</th>
+            <th scope="col">{{ form_label(form.SAJ) }}</th>
+
+            <th scope="col">{{ form_label(form.SCA) }}</th>
+            <th scope="col">{{ form_label(form.SCB) }}</th>
+            <th scope="col">{{ form_label(form.SCC) }}</th>
+            <th scope="col">{{ form_label(form.SCD) }}</th>
+            <th scope="col">{{ form_label(form.SCE) }}</th>
+            <th scope="col">{{ form_label(form.SCF) }}</th>
+            <th scope="col">{{ form_label(form.SCG) }}</th>
+            <th scope="col">{{ form_label(form.SCH) }}</th>
+            <th scope="col">{{ form_label(form.SCI) }}</th>
+            <th scope="col">{{ form_label(form.SCJ) }}</th>
+
+            <th scope="col">{{ form_label(form.SCK) }}</th>
+            <th scope="col">{{ form_label(form.SCL) }}</th>
+            <th scope="col">{{ form_label(form.SFC_LTC) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form.IDC) }}</td>
+            <td>{{ form_widget(form.IDD) }}</td>
+            <td>{{ form_widget(form.IDM) }}</td>
+            <td>{{ form_widget(form.SAA) }}</td>
+            <td>{{ form_widget(form.SAE) }}</td>
+            <td>{{ form_widget(form.SAF) }}</td>
+            <td>{{ form_widget(form.SAG) }}</td>
+            <td>{{ form_widget(form.SAH) }}</td>
+            <td>{{ form_widget(form.SAI) }}</td>
+            <td>{{ form_widget(form.SAJ) }}</td>
+
+            <td>{{ form_widget(form.SCA) }}</td>
+            <td>{{ form_widget(form.SCB) }}</td>
+            <td>{{ form_widget(form.SCC) }}</td>
+            <td>{{ form_widget(form.SCD) }}</td>
+            <td>{{ form_widget(form.SCE) }}</td>
+            <td>{{ form_widget(form.SCF) }}</td>
+            <td>{{ form_widget(form.SCG) }}</td>
+            <td>{{ form_widget(form.SCH) }}</td>
+            <td>{{ form_widget(form.SCI) }}</td>
+            <td>{{ form_widget(form.SCJ) }}</td>
+
+            <td>{{ form_widget(form.SCK) }}</td>
+            <td>{{ form_widget(form.SCL) }}</td>
+            <td>{{ form_widget(form.SFC_LTC) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="tableauDocsat" class="tab_doc">
+        <thead>
+        <tr>
+            <th scope="col">{{ form_label(form.SCN) }}</th>
+            <th scope="col">{{ form_label(form.SCO) }}</th>
+            <th scope="col">{{ form_label(form.SCP) }}</th>
+            <th scope="col">{{ form_label(form.SDA) }}</th>
+            <th scope="col">{{ form_label(form.SFA) }}</th>
+            <th scope="col">{{ form_label(form.SFB) }}</th>
+            <th scope="col">{{ form_label(form.SFC) }}</th>
+            <th scope="col">{{ form_label(form.SCM) }}</th>
+            <th scope="col">{{ form_label(form.SQA) }}</th>
+            <th scope="col">{{ form_label(form.SFD) }}</th>
+
+            <th scope="col">{{ form_label(form.SFE) }}</th>
+            <th scope="col">{{ form_label(form.SFF) }}</th>
+            <th scope="col">{{ form_label(form.SFG) }}</th>
+            <th scope="col">{{ form_label(form.SMT) }}</th>
+            <th scope="col">{{ form_label(form.SSA) }}</th>
+            <th scope="col">{{ form_label(form.STA) }}</th>
+            <th scope="col">{{ form_label(form.STP) }}</th>
+            <th scope="col">{{ form_label(form.STQ) }}</th>
+            <th scope="col">{{ form_label(form.STB) }}</th>
+            <th scope="col">{{ form_label(form.STL) }}</th>
+
+            <th scope="col">{{ form_label(form.STR) }}</th>
+            <th scope="col">{{ form_label(form.STS) }}</th>
+            <th scope="col">{{ form_label(form.SFC_PCL) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form.SCN) }}</td>
+            <td>{{ form_widget(form.SCO) }}</td>
+            <td>{{ form_widget(form.SCP) }}</td>
+            <td>{{ form_widget(form.SDA) }}</td>
+            <td>{{ form_widget(form.SFA) }}</td>
+            <td>{{ form_widget(form.SFB) }}</td>
+            <td>{{ form_widget(form.SFC) }}</td>
+            <td>{{ form_widget(form.SCM) }}</td>
+            <td>{{ form_widget(form.SQA) }}</td>
+            <td>{{ form_widget(form.SFD) }}</td>
+
+            <td>{{ form_widget(form.SFE) }}</td>
+            <td>{{ form_widget(form.SFF) }}</td>
+            <td>{{ form_widget(form.SFG) }}</td>
+            <td>{{ form_widget(form.SMT) }}</td>
+            <td>{{ form_widget(form.SSA) }}</td>
+            <td>{{ form_widget(form.STA) }}</td>
+            <td>{{ form_widget(form.STP) }}</td>
+            <td>{{ form_widget(form.STQ) }}</td>
+            <td>{{ form_widget(form.STB) }}</td>
+            <td>{{ form_widget(form.STL) }}</td>
+
+            <td>{{ form_widget(form.STR) }}</td>
+            <td>{{ form_widget(form.STS) }}</td>
+            <td>{{ form_widget(form.SFC_PCL) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="tableauDocsat" class="tab_doc">
+        <thead>
+        <tr>
+            <th scope="col">{{ form_label(form.LR1) }}</th>
+            <th scope="col">{{ form_label(form.LR2) }}</th>
+            <th scope="col">{{ form_label(form.LR3) }}</th>
+            <th scope="col">{{ form_label(form.LR4) }}</th>
+            <th scope="col">{{ form_label(form.LR5) }}</th>
+            <th scope="col">{{ form_label(form.LR6) }}</th>
+            <th scope="col">{{ form_label(form.PCOM) }}</th>
+            <th scope="col">{{ form_label(form.BOITIER) }}</th>
+            <th scope="col">{{ form_label(form.IDD_PCD6) }}</th>
+            <th scope="col">{{ form_label(form.Infirmerie) }}</th>
+            <th scope="col">{{ form_label(form.STC) }}</th>
+            <th scope="col">{{ form_label(form.SMA) }}</th>
+            <th scope="col">{{ form_label(form.SAM) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form.LR1) }}</td>
+            <td>{{ form_widget(form.LR2) }}</td>
+            <td>{{ form_widget(form.LR3) }}</td>
+            <td>{{ form_widget(form.LR4) }}</td>
+            <td>{{ form_widget(form.LR5) }}</td>
+            <td>{{ form_widget(form.LR6) }}</td>
+            <td>{{ form_widget(form.PCOM) }}</td>
+            <td>{{ form_widget(form.BOITIER) }}</td>
+            <td>{{ form_widget(form.IDD_PCD6) }}</td>
+            <td>{{ form_widget(form.Infirmerie) }}</td>
+            <td>{{ form_widget(form.STC) }}</td>
+            <td>{{ form_widget(form.SMA) }}</td>
+            <td>{{ form_widget(form.SAM) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <div class="boutons_submit_petit">
+        {{ form_widget(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+
+    <br />
+
+    <div class="div_titre_du_tableau_docsat">
+        <span class="titre_du_tableau">Documentations satellites requises pour {{ refDocument }} côté PRESTA</span>
+    </div>
+
+    <div class="tous_les_filtres_docsat">
+        <button type="button" id='check_all_presta' class="btn mon-bouton-edf btn-sm">Selectionner tout</button>
+        <button type="button" id='uncheck_all_presta' class="btn mon-bouton-edf btn-sm">Déselectionner tout</button>
+    </div>
+    {{ form_start(form_presta) }}
+    <table id="tableauDocsat" class="tab_presta">
+        <thead>
+        <tr>
+            <th scope="col">{{ form_label(form_presta.IDC) }}</th>
+            <th scope="col">{{ form_label(form_presta.IDD) }}</th>
+            <th scope="col">{{ form_label(form_presta.IDM) }}</th>
+            <th scope="col">{{ form_label(form_presta.SAA) }}</th>
+            <th scope="col">{{ form_label(form_presta.SAI) }}</th>
+
+            <th scope="col">{{ form_label(form_presta.LR1) }}</th>
+            <th scope="col">{{ form_label(form_presta.LR2) }}</th>
+            <th scope="col">{{ form_label(form_presta.LR3) }}</th>
+            <th scope="col">{{ form_label(form_presta.LR4) }}</th>
+            <th scope="col">{{ form_label(form_presta.LR5) }}</th>
+            <th scope="col">{{ form_label(form_presta.LR6) }}</th>
+
+            <th scope="col">{{ form_label(form_presta.PCOM) }}</th>
+            <th scope="col">{{ form_label(form_presta.SCG) }}</th>
+            <th scope="col">{{ form_label(form_presta.SCL) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFC_LTC) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form_presta.IDC) }}</td>
+            <td>{{ form_widget(form_presta.IDD) }}</td>
+            <td>{{ form_widget(form_presta.IDM) }}</td>
+            <td>{{ form_widget(form_presta.SAA) }}</td>
+            <td>{{ form_widget(form_presta.SAI) }}</td>
+
+            <td>{{ form_widget(form_presta.LR1) }}</td>
+            <td>{{ form_widget(form_presta.LR2) }}</td>
+            <td>{{ form_widget(form_presta.LR3) }}</td>
+            <td>{{ form_widget(form_presta.LR4) }}</td>
+            <td>{{ form_widget(form_presta.LR5) }}</td>
+            <td>{{ form_widget(form_presta.LR6) }}</td>
+
+            <td>{{ form_widget(form_presta.PCOM) }}</td>
+            <td>{{ form_widget(form_presta.SCG) }}</td>
+            <td>{{ form_widget(form_presta.SCL) }}</td>
+            <td>{{ form_widget(form_presta.SFC_LTC) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="tableauDocsat" class="tab_presta">
+        <thead>
+        <tr>
+
+            <th scope="col">{{ form_label(form_presta.SCP) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFA) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFB) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFC) }}</th>
+            <th scope="col">{{ form_label(form_presta.SCM) }}</th>
+            <th scope="col">{{ form_label(form_presta.SQA) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFD) }}</th>
+
+            <th scope="col">{{ form_label(form_presta.SFE) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFF) }}</th>
+            <th scope="col">{{ form_label(form_presta.SFG) }}</th>
+            <th scope="col">{{ form_label(form_presta.SMT) }}</th>
+            <th scope="col">{{ form_label(form_presta.SSA) }}</th>
+            <th scope="col">{{ form_label(form_presta.STA) }}</th>
+            <th scope="col">{{ form_label(form_presta.STB) }}</th>
+            <th scope="col">{{ form_label(form_presta.STC) }}</th>
+
+
+            <th scope="col">{{ form_label(form_presta.SFC_PCL) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ form_widget(form_presta.SCP) }}</td>
+            <td>{{ form_widget(form_presta.SFA) }}</td>
+            <td>{{ form_widget(form_presta.SFB) }}</td>
+            <td>{{ form_widget(form_presta.SFC) }}</td>
+            <td>{{ form_widget(form_presta.SCM) }}</td>
+            <td>{{ form_widget(form_presta.SQA) }}</td>
+            <td>{{ form_widget(form_presta.SFD) }}</td>
+
+            <td>{{ form_widget(form_presta.SFE) }}</td>
+            <td>{{ form_widget(form_presta.SFF) }}</td>
+            <td>{{ form_widget(form_presta.SFG) }}</td>
+            <td>{{ form_widget(form_presta.SMT) }}</td>
+            <td>{{ form_widget(form_presta.SSA) }}</td>
+            <td>{{ form_widget(form_presta.STA) }}</td>
+            <td>{{ form_widget(form_presta.STB) }}</td>
+            <td>{{ form_widget(form_presta.STC) }}</td>
+
+
+            <td>{{ form_widget(form_presta.SFC_PCL) }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <div class="boutons_submit_petit">
+        <a href="{{ path('page_recap_repro_creee',{'numeroReprographie' : repro.getNumeroReprographie}) }}">
+            <button type="button" class="btn btn-secondary btn-sm">Retour</button>
+        </a>
+        {{ form_widget(form_presta.sauver) }}
+    </div>
+    {{ form_end(form_presta) }}
+
+
+
+{% endblock %}

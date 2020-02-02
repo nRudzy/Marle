@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+<script>
+    var close = document.getElementsByClassName("closebtn");
+    var i;
+
+    for (i = 0; i < close.length; i++) {
+        close[i].onclick = function(){
+            var div = this.parentElement;
+            div.style.opacity = "0";
+            setTimeout(function(){ div.style.display = "none"; }, 600);
+        }
+    }
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="histo_perso_titre">Consultation de la demande N°{{ repro.getNumeroReprographie }}</div>
+
+    <div class="histo_perso_bulle_recap">
+        <span class="items_hpbr">Date de rendu : {{ repro.getDeadline | date('d/m/Y') }}</span>
+        {% if repro.momentJournee == 'M' %}<span class="items_hpbr">Matin</span>{% else %}<span class="items_hpbr">Après-Midi</span>{% endif %}
+        {% if repro.lieuReception == 'Courrier' %}
+            <span class="items_hpbr">Lieu de réception : PILOTIMMO / Courrier interne</span>
+        {% else %}
+            <span class="items_hpbr">Lieu de réception : {{ repro.getLieuReception }}</span>
+        {% endif %}
+        <span class="items_hpbr">Demandeur : {{ repro.getNni.getNom }} {{ repro.getNni.getPrenom | capitalize }}</span>
+        <span class="items_hpbr">Nature des documents : {{ repro.typeDocument }}</span>
+        {% if repro.filigrane != 'Aucun' %}<span class="items_hpbr">Filigrane : {{ repro.filigrane }}</span>{% endif %}
+        <span class="items_hpbr_dernier">{% if repro.estUrgence %}<td>Urgent</td>{% else %}<td>Non urgent</td>{% endif %}</span>
+    </div>
+
+    {% if doit_afficher_alerte_mail %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Attention !</strong> Le refus ne peut se faire. Aucun service de mail n'a été renseigné. Veuillez contacter l'administrateur du site afin de procéder aux réglages d'envoi de mails.
+        </div>
+    {% endif %}
+
+    {% if doit_afficher_alerte_contenu %}
+        <div class="alert info" style="margin-bottom: 15px;">
+            <span class="closebtn">&times;</span>
+            <strong>Attention !</strong> Veuillez renseigner un motif de refus.
+        </div>
+    {% endif %}
+
+
+    <table id="tableauRepro" class="tableauRepro">
+        <thead>
+        <tr>
+            <th scope="col">Référence</th>
+            <th scope="col">Indice</th>
+            <th scope="col">Tampon</th>
+            <th scope="col">Couleur</th>
+            <th scope="col">Nombre A3</th>
+            <th scope="col">Nombre A4</th>
+            <th scope="col">Nombre A5</th>
+            <th scope="col">Nombre A0</th>
+            <th scope="col">Recto/verso</th>
+            <th scope="col">Support</th>
+            <th scope="col">Perforé</th>
+            <th scope="col">Reliure</th>
+            <th scope="col">Agrafé</th>
+            <th scope="col">Plié</th>
+            <th scope="col">Massicotage</th>
+            <th scope="col">Plastification</th>
+            <th scope="col">Documentation satellite</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for cd in contientDocs %}
+            <tr>
+                {% if repro.getIdTaxonomie.codeTaxonomie == 'RPD' or repro.getIdTaxonomie.codeTaxonomie == 'RAM' or repro.getIdTaxonomie.codeTaxonomie == 'RAME' or repro.getIdTaxonomie.codeTaxonomie == 'CSP' %}
+                    <td>{{cd.refDocument}}</td>
+                {% else %}
+                    {% if cd.nomDocument %}
+                        <td><a href="{{ asset('uploads/brochures/' ~ cd.nomDocument) }}" target="_blank">{{ cd.refDocument}}</a></td>
+                    {% else %}
+                        <td>{{cd.refDocument}}</td>
+                    {% endif %}
+                {% endif %}
+                <td>{{ cd.indice }}</td>
+                <td>{{ cd.tampon }}</td>
+                {% if cd.couleur %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                <td>{{ cd.nbExemplaireA3 }}</td>
+                <td>{{ cd.nbExemplaireA4 }}</td>
+                <td>{{ cd.nbExemplaireA5 }}</td>
+                <td>{{ cd.nbExemplaireA0 }}</td>
+                <td>{{ cd.rectoVerso }}</td>
+                <td>{{ cd.support }}</td>
+                <td>{{ cd.nbTrous }} trous</td>
+                <td>{{ cd.reliement }}</td>
+                {% if cd.agrafes and cd.agrafes == 1 %}
+                    <td>{{ cd.agrafes }} point</td>
+                {% else %}
+                    <td>{{ cd.agrafes }} points</td>
+                {% endif %}
+
+                {% if cd.pliure == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                {% if cd.massicotage == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                {% if cd.plastification == 1 %}
+                    <td>Oui</td>
+                {% else %}
+                    <td>Non</td>
+                {% endif %}
+                <td>
+                    {% for documentsDansContientDocs in cd.documents.values %}
+                        {% if documentsDansContientDocs.docsats.values is empty %}
+                            Aucune documentation satellite.
+                        {% endif %}
+                        {% for docsatDansDocuments in documentsDansContientDocs.docsats.values %}
+                            {% set origine = docsatDansDocuments.getOrigine %}
+                            {% set docsat = docsatDansDocuments.getIdSatellite.getCodeSatellite %}
+                            {% if app.token.roles.0.role != 'ROLE_USER'%}
+                                {% if origine == 'DOC' %}
+                                    <span class="blue_docsat">{{ docsat }}</span>
+                                {% else %}
+                                    <span>{{ docsat }}</span>
+                                {% endif %}
+                            {% else %}
+                                <span>{{ docsat }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    {% if repro.observations %}
+        <div class="observations">
+            <span>
+                <strong>Observations :</strong>
+            </span>
+            <br/>
+            <p>
+                {{ repro.observations | nl2br }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if app.token.roles.0.role != 'ROLE_USER' %}
+        {% if repro.dateMiseEnPlace %}
+            <div class="observations">Mise en place des documentations satellites faite le : <strong>{{ repro.dateMiseEnPlace | date('d/m/Y') }}</strong></div>
+        {% endif %}
+    {% endif %}
+
+
+    {% if repro.getIdTaxonomie.codeTaxonomie != 'DRD' %}
+        {{ form_start(form) }}
+        <div class="boutons_submit">
+            <div class="boutons_submit_bis">
+                {{ form_row(form.modify) }}
+            </div>
+        </div>
+        <div class="boutons_submit">
+
+            {{ form_widget(form.lieu_traitement) }}
+            {{ form_widget(form.submit) }}
+        </div>
+        <br/><br/>
+        <div class="boutons_refus">
+            {{ form_widget(form.motif_annulation) }}
+            {{ form_widget(form.refuse) }}
+        </div>
+
+
+        {{ form_end(form) }}
+    {% endif %}
+
+    {% if repro.deadLine | date('d/m/Y') != repro.deadLineOld | date('d/m/Y') %}
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-exclamation-circle"></i> La date de rendu a été changée. Elle était datée au : <strong>{{ repro.deadLineOld | date('d/m/Y') }}</strong>
+        </div>
+    {% endif %}
+
+
+{% endblock %}
