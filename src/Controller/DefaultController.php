@@ -107,6 +107,7 @@ class DefaultController extends AbstractController
         $this->get('security.token_storage')->setToken(null);
         $request->getSession()->invalidate();
 
+        
         return $this->redirectToRoute('login');
     }
 
