@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}BIRA - Connexion{% endblock %}</title>
+    <title>{% block title %}Marle - Inscription{% endblock %}</title>
     {% block stylesheets %}
 
     {% endblock %}
@@ -244,29 +244,36 @@
 
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            {% if error %}
-                <p style="color: red;position: absolute;margin-left: 10px;">
-                    Utilisateur non inscrit. Veuillez vous inscrire.
-                </p>
-            {% endif %}
+            {#            {% if error %}#}
+            {#                <p style="color: red;position: absolute;margin-left: 10px;">#}
+            {#                    Utilisateur non inscrit. Veuillez vous inscrire.#}
+            {#                </p>#}
+            {#            {% endif %}#}
             <div class="formulaire">
-                <img src="{{ asset('images/logo.png') }}" alt="EDF-logo" style="width: 50%; height: auto;">
-                <div class="social-container">
-                </div>
+                <img src="{{ asset('images/logo.png') }}" alt="Marle-logo" style="width: 50%; height: auto;">
+
+
                 <div class="form-group">
                     {{ form_start(form) }}
 
                     {{ form_widget(form.nni) }}
-                    {{ form_widget(form.connexion) }}
+                    {{ form_widget(form.nom) }}
+                    {{ form_widget(form.prenom) }}
+                    {{ form_widget(form.password) }}
+                    {{ form_widget(form.confirmPassword) }}
+                    {{ form_widget(form.inscription) }}
 
                     {{ form_end(form) }}
                 </div>
+
             </div>
         </div>
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <h1>Bienvenue sur BIRA</h1>
+                    <h1>Bienvenue sur Marle</h1>
+                    <p>Déjà inscrit ?</p>
+                    <a href="{{ path("connexion") }}">Se connecter</a>
                 </div>
             </div>
         </div>

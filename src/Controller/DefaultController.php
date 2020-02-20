@@ -38,77 +38,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage")
-     * @param Request $request
-     * @return RedirectResponse
+     * @Route("/", name="home")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        // Passage du site en variable de session
-        $session = $request->getSession();
-
-        return $this->redirectToRoute('login');
-    }
-
-    /**
-     * @Route("/login", name="login")
-     * @param Request $request
-     * @param AuthenticationUtils $authUtils
-     * @return Response
-     */
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
-    {
-
-        $user = new Utilisateur();
-        $form = $this->createFormBuilder($user)
-            ->add('nni', TextType::class,[
-                'attr' => [
-                    'placeholder' => 'NNI',
-                    'class' => 'form-control',
-                    'id' => 'username',
-                ],
-            ])
-            ->add('connexion', SubmitType::class, [
-                'label' => 'Se connecter',
-                'attr' => [
-                    'class' => 'btn btn-primary pull-right',
-                ],
-            ])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        $error=false;
-        if (($form->getClickedButton() && 'connexion' === $form->getClickedButton()->getName()) && $form->isValid()) {
-            $nni = $form->get('nni')->getData();
-            $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-            $find_user = $repo->findBy(['nni'=>$nni]);
-            if($find_user){
-                return $this->redirectToRoute('page_accueil');
-            }
-            else {
-                $error = true;
-            }
-            dump($nni);
-        }
-        return $this->render('login.html.twig', array(
-            'form' => $form->createView(),
-            'error' => $error,
-        ));
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function logoutAction(Request $request)
-    {
-        $this->get('security.token_storage')->setToken(null);
-        $request->getSession()->invalidate();
-
-        
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('connexion');
     }
 
     /**
