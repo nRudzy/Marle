@@ -3,9 +3,16 @@
 {% set nom = app.user.nom|upper %}
 {% endif %}
 <div class="header_bis">
-    {% if app.user %}
-    <div class="h_bis_menu_liens">
 
+    <div class="h_logo">
+        <a href="{{ path("page_accueil") }}">
+            <img class="h_edf_logo" src="{{ asset('images/logo.png') }}" alt="EDF-logo">
+        </a>
+    </div>
+
+
+
+    <div class="h_bis_menu_liens">
         <span style="margin-right: 30px;">Bonjour {{ prenom }} {{ nom }} </span>
 
         {% if is_granted('ROLE_ADMIN') %}
@@ -19,16 +26,6 @@
         {% endif %}
 
             <a href="{{ path('deconnexion') }}"><button type="button" class="h_bis_deconnexion">Déconnexion</button></a>
-
     </div>
-
-    {% else %}
-    <div class="h_bis_menu_liens_unlogged">
-
-{#    Rien à mettre dedans car aucun accès dedans #}
-
-    </div>
-
-    {% endif %}
 
 </div>

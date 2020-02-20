@@ -69,6 +69,32 @@
             cursor: pointer;
         }
 
+        .btn-overlay-right{
+            border-radius: 20px;
+            border: 1px solid #e6eaec;
+            background-color: #e6eaec;
+            color: #5b7f80;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+        }
+
+        .btn-overlay-right:active {
+            transform: scale(0.95);
+        }
+
+        .btn-overlay-right:focus {
+            outline: none;
+        }
+
+        .btn-overlay-right:hover {
+            cursor: pointer;
+        }
+
         div.formulaire {
             background-color: #FFFFFF;
             display: flex;
@@ -206,10 +232,6 @@
             transform: translateX(20%);
         }
 
-        .social-container {
-            margin: 20px 0;
-        }
-
         .social-container a {
             border: 1px solid #DDDDDD;
             border-radius: 50%;
@@ -219,6 +241,9 @@
             margin: 0 5px;
             height: 40px;
             width: 40px;
+        }
+        #title{
+            margin-bottom: 40px;
         }
     </style>
 
@@ -246,9 +271,9 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <h1>Bienvenue sur Marle</h1>
-                    <p>Déjà inscrit ?</p>
-                    <a href="{{ path("connexion") }}">Se connecter</a>
+                    <h1 id="title">Bienvenue sur Marle</h1>
+                    <span>Déjà inscrit ?</span>
+                    <button class="btn-overlay-right"><a href="{{ path("connexion") }}">Se connecter</a></button>
                 </div>
             </div>
         </div>

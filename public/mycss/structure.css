@@ -1,6 +1,7 @@
 /***************** HEADER *****************/
 :root {
     --main-color: #1c7980;
+    --second-color: #e6eaec;
 }
 
 .navbarre {
@@ -42,22 +43,28 @@
 /***************** HEADER BIS *****************/
 .header_bis{
     display: grid;
-    grid-template-columns:  auto;
+    grid-template-columns:  auto auto;
     grid-template-rows: auto;
-    grid-template-areas: "h_bis_menu_liens";
-    background-color: var(--main-color);
+    grid-template-areas: "h_logo h_bis_menu_liens";
+    align-items: center;
+    background-color: var(--second-color);
     padding : 5px 0 5px 25px;
+}
+
+.h_logo img {
+    width: 5%;
 }
 
 .h_bis_menu_liens{
     grid-area: h_bis_menu_liens;
-    color : #FFFFFF;
+    color : var(--main-color);
     text-align: right;
 }
 
 .h_bis_deconnexion{
-    background-color: #ffc332;
-    border: 1px solid black;
+    background-color: var(--main-color);
+    border: 1px solid #5b7f80;
+    color: #FFFFFF;
     border-radius: 5px 5px 5px 5px;
     padding: 2px 20px 2px 20px;
     margin-right: 25px;
@@ -65,7 +72,7 @@
 }
 
 .h_bis_deconnexion:hover{
-    background-color: #ae812a;
+    background-color: #195a61;
     cursor: pointer;
 }
 
@@ -92,9 +99,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    background-color: #e6eaec;
-    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
-    box-shadow: 0px 2px 25px 0px rgba(0,0,0,0.2);
+    background-color: var(--main-color);
+    box-shadow: 0 2px 25px 0 rgba(0,0,0,0.2);
 
 }
 
@@ -102,13 +108,13 @@
     display: block;
     position: relative;
     float: left;
-    background-color: #e6eaec;
+    background-color: var(--main-color);
     z-index: 1;
 }
 
 li ul {
     display: none;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 li span {
@@ -124,11 +130,11 @@ ul li a {
     padding: 1em;
     text-decoration: none;
     white-space: nowrap;
-    color: var(--main-color);
+    color: var(--second-color);
 }
 
 ul li a:hover {
-    background-color: #e2630f;
+    background-color: var(--main-color);
     color: #FFFFFF;
 }
 
@@ -142,11 +148,11 @@ li:hover li {
 }
 
 li:hover a {
-    background-color: #e6eaec;
+    background-color: var(--main-color);
 }
 
 li:hover li a:hover {
-    background-color: #e2630f;
+    background-color: #259ea7;
     color: #FFFFFF;
 }
 

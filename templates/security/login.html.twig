@@ -10,17 +10,6 @@
 
 </head>
 
-{% block javascripts %}
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-
-    <script>
-        function hideMessage() {
-            let x = document.getElementById("alertsuccess");
-                x.style.display = "none";
-        }
-    </script>
-{% endblock %}
-
 {% block body %}
 
     <style>
@@ -78,6 +67,32 @@
         }
 
         button:hover {
+            cursor: pointer;
+        }
+
+        .btn-overlay-right{
+            border-radius: 20px;
+            border: 1px solid #e6eaec;
+            background-color: #e6eaec;
+            color: #5b7f80;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+        }
+
+        .btn-overlay-right:active {
+            transform: scale(0.95);
+        }
+
+        .btn-overlay-right:focus {
+            outline: none;
+        }
+
+        .btn-overlay-right:hover {
             cursor: pointer;
         }
 
@@ -248,6 +263,9 @@
             background-color: #7aa5a6;
             transition:0.5s;
         }
+        #title{
+            margin-bottom: 40px;
+        }
 
     </style>
 
@@ -279,7 +297,7 @@
                             <input type="password" class="form-control" placeholder="Mot de passe" name="_password" required>
                         </label>
                     </div>
-                    <div class="form_group">
+                    <div class="form-group">
                         <button type="submit" class="btn btn-success">Connexion</button>
                     </div>
                 </form>
@@ -289,9 +307,9 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <h1>Bienvenue sur Marle</h1>
-                    <p>Pas encore inscrit ?</p>
-                    <a href="{{ path("inscription") }}">Inscription</a>
+                    <h1 id="title">Bienvenue sur Marle</h1>
+                    <span>Pas encore inscrit ?</span>
+                    <button class="btn-overlay-right"><a href="{{ path("inscription") }}">Inscription</a></button>
                 </div>
             </div>
         </div>
