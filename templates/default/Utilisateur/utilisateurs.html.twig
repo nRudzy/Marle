@@ -117,39 +117,32 @@
                 <td>{{ user.getNni }}</td>
                 <td>{{ user.getNom }}</td>
                 <td>{{ user.getPrenom | capitalize }}</td>
-                {% if user.getRole == 'ROLE_USER' %}
+                {% if user.getRoles.0 == 'ROLE_USER' %}
                     <td>Utilisateur</td>
                 {% endif %}
-                {% if user.getRole == 'ROLE_DOC' %}
+                {% if user.getRoles.0 == 'ROLE_DOC' %}
                     <td>Agent DOC</td>
                 {% endif %}
-                {% if user.getRole == 'ROLE_REPRO' %}
+                {% if user.getRoles.0 == 'ROLE_REPRO' %}
                     <td>Prestataire</td>
                 {% endif %}
-                {% if user.getRole == 'ROLE_BOTH' %}
+                {% if user.getRoles.0 == 'ROLE_BOTH' %}
                     <td>Agent DOC et reprographie</td>
                 {% endif %}
-                {% if user.getRole == 'ROLE_ADMIN' %}
+                {% if user.getRoles.0 == 'ROLE_ADMIN' %}
                     <td>Administrateur</td>
                 {% endif %}
-                {% if user.getRole == 'ROLE_SUPER_ADMIN' %}
-                    <td>Super administrateur</td>
-                {% endif %}
                 <td>
-                    {% if user.getRole != 'ROLE_SUPER_ADMIN'%}
                     <a href="{{ path('page_modifier_utilisateur', {'nni' : user.getNni})  }}">
                         <button type="button" class="btn btn-outline-dark">
                             <i class="fas fa-edit"></i>
                         </button></a>
-                    {% endif %}
-                    {% if user.getRole != 'ROLE_SUPER_ADMIN' and user.getRole != 'ROLE_ADMIN' %}
 
                         <a onclick="return confirm('L\'utilisateur {{ user.getNni }} sera supprimé. Continuer ?')" href="{{ path('page_supprimer_utilisateur', {'nni' : user.getNni}) }}">
                             <button type="button" class="btn btn-danger">
                                 <i class="fas fa-times"></i>
                             </button>
                         </a>
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -164,7 +157,6 @@
             {{ form_widget(form.nni) }}
             {{ form_widget(form.nom) }}
             {{ form_widget(form.prenom) }}
-            {{ form_widget(form.role) }}
             {{ form_widget(form.ajouter) }}
         </div>
 

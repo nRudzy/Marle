@@ -9,6 +9,7 @@ use App\Entity\Reprographie;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,24 +82,44 @@ class UtilisateurController extends AbstractController
 
         $user = $this->getDoctrine()->getRepository(Utilisateur::class)->findOneBy(['nni' => $utilisateur->getNni()]);
 
-        $form = $this->createForm(UtilisateurType::class, $utilisateur)
+//        $form = $this->createForm(UtilisateurType::class, $utilisateur)
+//            ->add('modify', SubmitType::class,[
+//                'label' => 'Modifier',
+//                'attr' => [
+//                    'class' => 'btn btn-warning btn-sm',
+//                    'onclick' => 'return confirm("Êtes-vous sur de vouloir assigner ce rôle ?")',
+//                ],
+//            ]);
+
+        $roleDef = [];
+        $form = $this->createFormBuilder($roleDef)
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Utilisateur' => "ROLE_USER",
+                    'Pôle DOC' => "ROLE_DOC",
+                    'Prestataire' => "ROLE_REPRO",
+                    'Accueil' => "ROLE_BOTH",
+                    'Administrateur' => "ROLE_ADMIN"
+                ],
+                'label' => ' ',
+            ])
             ->add('modify', SubmitType::class,[
                 'label' => 'Modifier',
                 'attr' => [
                     'class' => 'btn btn-warning btn-sm',
                     'onclick' => 'return confirm("Êtes-vous sur de vouloir assigner ce rôle ?")',
                 ],
-            ]);
+            ])
+        ->getForm();
 
         $form->handleRequest($request);
 
         if (($form->getClickedButton() && 'modify' === $form->getClickedButton()->getName()) && $form->isValid()) {
 
+            $nouveauRole = [$form->get('roles')->getData()];
+            $utilisateur->setRoles($nouveauRole);
             $em->persist($utilisateur);
             $em->flush();
-
-            return $this->redirectToRoute('page_utilisateurs');
-
         }
 
         return $this->render('default/Utilisateur/modifier-utilisateur.html.twig', [

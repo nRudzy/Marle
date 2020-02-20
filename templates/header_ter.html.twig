@@ -1,4 +1,3 @@
-{#{% if app.user %}#}
 <div class="header_ter">
     <ul class="main-navigation">
         <li><a href="{{ path('page_accueil') }}"><i class="fas fa-home"></i></a></li>
@@ -12,19 +11,24 @@
                 <li><a href="{{ path('page_reprographie_ape') }}">APE</a></li>
             </ul>
         </li>
-            <li><a href="#">Consulter</a>
-                <ul>
-                    <li><a href="#">Reprographies <span> <i class="fas fa-caret-right"></i> </span> </a>
-                        <ul>
+        <li><a href="#">Consulter</a>
+            <ul>
+                <li><a href="#">Reprographies <span> <i class="fas fa-caret-right"></i> </span> </a>
+                    <ul>
+                        {% if is_granted('ROLE_DOC') %}
                             <li><a href="{{ path('page_demandes_doc') }}">A valider</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_PRESTA') %}
                             <li><a href="{{ path('page_demandes_presta') }}">A facturer</a></li>
-                        </ul>
-                    </li>
-                        <li><a href="{{ path('page_recherche_avancee') }}">Recherche avancée</a></li>
-                </ul>
-            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li><a href="{{ path('page_recherche_avancee') }}">Recherche avancée</a></li>
+            </ul>
+        </li>
 
-                <li><a href="#">Administrateur</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="#">Administrateur</a>
                 <ul>
                     <li><a href="#">Gérer <span id="spanbis"> <i class="fas fa-caret-right"></i> </span> </a>
                         <ul>
@@ -33,8 +37,8 @@
                         </ul>
                     </li>
                 </ul>
-                </li>
+            </li>
+        {% endif %}
 
     </ul>
 </div>
-{#{% endif %}#}

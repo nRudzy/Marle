@@ -130,7 +130,7 @@
                 {% endif %}
 
                 <td>
-                {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD') and (app.user == repro.nni.nni) %}
+                {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD') and (app.user.nni == repro.nni.nni) %}
                     <a href="{{ path('page_editer_demande', {'numeroReprographie' : repro.getNumeroReprographie}) }}">
                     <button type="button" class="btn btn-outline-dark">
                         <i class="fas fa-edit"></i>
@@ -142,7 +142,7 @@
                         </button>
                     </a>
                 {% endif %}
-                    {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD' or repro.getIdTaxonomie.codeTaxonomie == 'APD' or repro.getIdTaxonomie.codeTaxonomie == 'IDL') and (app.user == repro.nni.nni) %}
+                    {% if (repro.getIdTaxonomie.codeTaxonomie == 'ETB' or repro.getIdTaxonomie.codeTaxonomie == 'DRD' or repro.getIdTaxonomie.codeTaxonomie == 'APD' or repro.getIdTaxonomie.codeTaxonomie == 'IDL') and (app.user.nni == repro.nni.nni) %}
                         <a href="{{ path('page_supprimer_repro', {'numeroReprographie' : repro.getNumeroReprographie}) }}">
                         <button type="button" class="btn btn-danger">
                             <i class="fas fa-times"></i>

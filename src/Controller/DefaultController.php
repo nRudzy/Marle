@@ -1461,16 +1461,6 @@ class DefaultController extends AbstractController
                     'placeholder' => 'Prénom'
                 ],
             ])
-            ->add('role', ChoiceType::class, [
-                'choices' => [
-                    'Utilisateur' => 'ROLE_USER',
-                    'Pôle DOC' => 'ROLE_DOC',
-                    'Prestataire' => 'ROLE_REPRO',
-                    'Accueil' => 'ROLE_BOTH',
-                    'Administrateur' => 'ROLE_ADMIN'
-                ],
-                'label' => ' ',
-            ])
             ->add('ajouter', SubmitType::class,[
                 'label' => 'Ajouter',
                 'attr' => [

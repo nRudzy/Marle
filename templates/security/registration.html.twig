@@ -9,26 +9,6 @@
 
 </head>
 
-{% block javascripts %}
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            var name = "choix_site";
-            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-            if (match) {
-                $('#selectSite').val(match[2]);
-            }
-            console.log(match);
-        }(jQuery));
-
-        function updateCookie() {
-            document.cookie = "choix_site=" + $('#selectSite').val();
-
-        }
-    </script>
-{% endblock %}
-
 {% block body %}
 
     <style>
@@ -244,11 +224,6 @@
 
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            {#            {% if error %}#}
-            {#                <p style="color: red;position: absolute;margin-left: 10px;">#}
-            {#                    Utilisateur non inscrit. Veuillez vous inscrire.#}
-            {#                </p>#}
-            {#            {% endif %}#}
             <div class="formulaire">
                 <img src="{{ asset('images/logo.png') }}" alt="Marle-logo" style="width: 50%; height: auto;">
 

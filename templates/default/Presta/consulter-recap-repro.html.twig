@@ -123,7 +123,7 @@
                         {% for docsatDansDocuments in documentsDansContientDocs.docsats.values %}
                             {% set origine = docsatDansDocuments.getOrigine %}
                             {% set docsat = docsatDansDocuments.getIdSatellite.getCodeSatellite %}
-                            {% if app.token.roles.0.role != 'ROLE_USER'%}
+                            {% if not is_granted('ROLE_USER') %}
                                 {% if origine == 'DOC' %}
                                     <span class="blue_docsat">{{ docsat }}</span>
                                 {% else %}

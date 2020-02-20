@@ -205,7 +205,7 @@
             <th scope="col">Urgence ?</th>
             <th scope="col">Lieu de réception</th>
             <th scope="col">Service</th>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
                 <th scope="col">Filigrane</th>
             {% else %}
                 <td style="display: none;">{{ form_widget(form.filigrane) }}</td>
@@ -221,7 +221,7 @@
             <td>{{ form_widget(form.estUrgence) }}</td>
             <td>{{ form_widget(form.lieuReception) }}</td>
             <td>{{ form_widget(form.serviceDemandeur) }}</td>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
                 <th scope="col">{{ form_widget(form.filigrane) }}</th>
             {% endif %}
             <td><button id="ajoute_document" class="btn btn-info">+</button></td>
@@ -249,7 +249,7 @@
             <th scope="col">Plié</th>
             <th scope="col">Massicoté</th>
             <th scope="col">Plastifié</th>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
             <th scope="col">Documentation satellite</th>
             {% endif %}
             <th scope="col">Actions</th>
@@ -305,7 +305,7 @@
                     <td>Non</td>
                 {% endif %}
 
-                {% if app.token.roles.0.role != 'ROLE_USER'%}
+                {% if not is_granted('ROLE_USER') %}
                 <td>
                     {% for documentsDansContientDocs in cd.documents.values %}
                         {% if documentsDansContientDocs.docsats.values is empty %}

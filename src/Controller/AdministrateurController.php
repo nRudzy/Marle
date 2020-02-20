@@ -246,7 +246,7 @@ class AdministrateurController extends AbstractController
     }
 
     /**
-     * @Route("/pdf/reprographie-{moispdf}-{anneepdf}", name="_pdf")
+     * @Route("/administrateur/pdf/reprographie-{moispdf}-{anneepdf}", name="_pdf")
      * @return Response
      */
     public function pdfAction($moispdf, $anneepdf){

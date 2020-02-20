@@ -38,7 +38,7 @@
             <th scope="col">Plié</th>
             <th scope="col">Massicotage</th>
             <th scope="col">Plastification</th>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
                 <th scope="col">Documentation satellite</th>
                 <th scope="col">Diffusion</th>
             {% endif %}
@@ -93,7 +93,7 @@
                 {% else %}
                     <td>Non</td>
                 {% endif %}
-                {% if app.token.roles.0.role != 'ROLE_USER'%}
+                {% if not is_granted('ROLE_USER') %}
                 <td>
                     {% for documentsDansContientDocs in cd.documents.values %}
                         {% if documentsDansContientDocs.docsats.values is empty %}
@@ -111,7 +111,7 @@
                     {% endfor %}
                 </td>
                 {% endif %}
-                {% if app.token.roles.0.role != 'ROLE_USER'%}
+                {% if not is_granted('ROLE_USER') %}
                     <td>
                         <a href="{{ path('page_editer_docsats_presta', {'numeroReprographie' : repro.numeroReprographie, 'refDocument' : cd.refDocument}) }}">
                             <button type="button" class="btn btn-outline-dark btn-sm">

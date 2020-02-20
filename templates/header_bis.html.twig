@@ -1,31 +1,24 @@
 {% if app.user %}
-{% set prenom = app.session.get('infosUser').prenom|capitalize %}
-{% set nom = app.session.get('infosUser').nom|upper %}
-{% set schema = app.session.get('schema')|upper %}
+{% set prenom = app.user.prenom|capitalize %}
+{% set nom = app.user.nom|upper %}
 {% endif %}
 <div class="header_bis">
     {% if app.user %}
     <div class="h_bis_menu_liens">
 
-        <span style="margin-right: 30px;">Bonjour {{ prenom }} {{ nom }} ({{ schema }})</span>
+        <span style="margin-right: 30px;">Bonjour {{ prenom }} {{ nom }} </span>
 
-        {% if app.token.roles.0.role == 'ROLE_SUPER_ADMIN'%}
-            <span>Super Administrateur</span>
-        {% endif %}
-        {% if app.token.roles.0.role == 'ROLE_ADMIN'%}
+        {% if is_granted('ROLE_ADMIN') %}
             <span>Administrateur</span>
-        {% endif %}
-        {% if app.token.roles.0.role == 'ROLE_DOC'%}
+        {% elseif is_granted('ROLE_DOC') %}
             <span>Pôle DOC</span>
-        {% endif %}
-        {% if app.token.roles.0.role == 'ROLE_REPRO'%}
+        {% elseif is_granted('ROLE_REPRO') %}
             <span>Pôle Repro</span>
-        {% endif %}
-        {% if app.token.roles.0.role == 'ROLE_BOTH'%}
+        {% elseif is_granted('ROLE_BOTH') %}
             <span>Pôle DOC/Repro</span>
         {% endif %}
 
-            <a href="{{ path('logout') }}"><button type="button" class="h_bis_deconnexion">Déconnexion</button></a>
+            <a href="{{ path('deconnexion') }}"><button type="button" class="h_bis_deconnexion">Déconnexion</button></a>
 
     </div>
 

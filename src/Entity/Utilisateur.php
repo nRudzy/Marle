@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * Utilisateur
@@ -58,6 +59,12 @@ class Utilisateur implements UserInterface
      * @ORM\Column(name="prenom", type="string", length=100, nullable=false)
      */
     private $prenom;
+
+    /**
+     * @var json
+     * @ORM\Column(name="roles", type="json")
+     */
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reprographie", mappedBy="nni", cascade={"remove"})
@@ -180,11 +187,32 @@ class Utilisateur implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return Utilisateur
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles.
+     *
+     * @return array
+     *
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+
+        $roles[] = 'ROLE_USER';
+
+        return array_unique((array)$roles);
     }
 
     /**

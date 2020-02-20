@@ -33,10 +33,15 @@ class SecurityController extends AbstractController
             $hash = $encoder->encodePassword($utilisateur,$utilisateur->getPassword());
 
             $utilisateur->setPassword($hash);
+            $utilisateur->setRoles(["ROLE_USER"]);
             $em->persist($utilisateur);
             $em->flush();
 
-            return $this->redirectToRoute('connexion');
+            $created = true;
+
+            return $this->redirect($this->generateUrl('connexion',[
+                'created' => $created,
+            ]));
         }
 
         return $this->render('security/registration.html.twig' ,[
@@ -57,9 +62,12 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $created = false;
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'created' => $created,
         ]);
     }
 

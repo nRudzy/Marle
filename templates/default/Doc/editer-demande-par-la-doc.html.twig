@@ -43,7 +43,7 @@
             <th scope="col">Urgence ?</th>
             <th scope="col">Lieu de réception</th>
             <th scope="col">Service</th>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
                 <th scope="col">Filigrane</th>
             {% endif %}
 
@@ -57,7 +57,7 @@
             <td>{{ form_widget(form.estUrgence) }}</td>
             <td>{{ form_widget(form.lieuReception) }}</td>
             <td>{{ form_widget(form.serviceDemandeur) }}</td>
-            {% if app.token.roles.0.role != 'ROLE_USER'%}
+            {% if not is_granted('ROLE_USER') %}
                 <th scope="col">{{ form_widget(form.filigrane) }}</th>
             {% endif %}
         </tr>
@@ -144,7 +144,7 @@
                         {% for docsatDansDocuments in documentsDansContientDocs.docsats.values %}
                             {% set origine = docsatDansDocuments.getOrigine %}
                             {% set docsat = docsatDansDocuments.getIdSatellite.getCodeSatellite %}
-                            {% if app.token.roles.0.role != 'ROLE_USER'%}
+                            {% if not is_granted('ROLE_USER') %}
                                 {% if origine == 'DOC' %}
                                     <span class="blue_docsat">{{ docsat }}</span>
                                 {% else %}
