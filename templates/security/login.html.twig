@@ -271,9 +271,6 @@
 
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
             {% if app.request.get('created') is same as("1") %}
                 <div>
                     <div id="alertsuccess" class="alert-simple alert-success " onclick="parentNode.remove()">
@@ -297,6 +294,9 @@
                             <input type="password" class="form-control" placeholder="Mot de passe" name="_password" required>
                         </label>
                     </div>
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Connexion</button>
                     </div>
