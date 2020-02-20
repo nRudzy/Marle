@@ -47,7 +47,7 @@ class DefaultController extends AbstractController
         // Passage du site en variable de session
         $session = $request->getSession();
 
-        return $this->redirectToRoute('page_accueil');
+        return $this->redirectToRoute('login');
     }
 
     /**
