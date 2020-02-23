@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Satellite
@@ -19,6 +20,7 @@ class Satellite
      * @ORM\Column(name="id_satellite", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups("repro:read")
      */
     private $id_satellite;
 
@@ -26,11 +28,13 @@ class Satellite
      * @var string
      *
      * @ORM\Column(name="codeSatellite", type="string", length=10, unique=true)
+     * @Groups("repro:read")
      */
     private $codeSatellite;
 
     /**
      * @ORM\OneToMany(targetEntity="Docsat", mappedBy="id_satellite", cascade={"remove"})
+     * @Groups("repro:read")
      */
     private $docsats;
 

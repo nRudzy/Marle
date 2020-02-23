@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Reprographie
@@ -19,6 +20,7 @@ class Reprographie
      * @ORM\Column(name="id_reprographie", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups("repro:read")
      */
     private $id_reprographie;
 
@@ -26,6 +28,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $titre;
 
@@ -33,6 +36,7 @@ class Reprographie
      * @var int
      *
      * @ORM\Column(name="numeroReprographie", type="string", length=100, unique=true)
+     * @Groups("repro:read")
      */
     private $numeroReprographie;
 
@@ -40,6 +44,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="typeDocument", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $typeDocument;
 
@@ -47,6 +52,7 @@ class Reprographie
      * @var \DateTime
      *
      * @ORM\Column(name="dateDemande", type="datetime")
+     * @Groups("repro:read")
      */
     private $dateDemande;
 
@@ -54,6 +60,7 @@ class Reprographie
      * @var \DateTime
      *
      * @ORM\Column(name="deadline", type="datetime")
+     * @Groups("repro:read")
      */
     private $deadline;
 
@@ -61,6 +68,7 @@ class Reprographie
      * @var \DateTime
      *
      * @ORM\Column(name="deadline_old", type="datetime", nullable=true)
+     * @Groups("repro:read")
      */
     private $deadlineOld;
 
@@ -68,6 +76,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="moment_journee", type="string", length=100, nullable=true)
+     * @Groups("repro:read")
      */
     private $momentJournee;
 
@@ -75,6 +84,7 @@ class Reprographie
      * @var bool
      *
      * @ORM\Column(name="est_urgence", type="boolean")
+     * @Groups("repro:read")
      */
     private $estUrgence;
 
@@ -82,6 +92,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="lieu_reception", type="string", length=100)
+     * @Groups("repro:read")
      */
     private $lieuReception;
 
@@ -89,6 +100,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="lieu_traitement", type="string", length=100, nullable=true)
+     * @Groups("repro:read")
      */
     private $lieuTraitement;
 
@@ -96,6 +108,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="lieu_renvoie", type="string", length=100, nullable=true)
+     * @Groups("repro:read")
      */
     private $lieuRenvoie;
 
@@ -103,6 +116,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="service_demandeur", type="string", length=10)
+     * @Groups("repro:read")
      */
     private $serviceDemandeur;
 
@@ -110,29 +124,34 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="motif_annulation", type="text", nullable=true)
+     * @Groups("repro:read")
      */
     private $motifAnnulation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Taxonomie", inversedBy="repros")
      * @ORM\JoinColumn(name="id_taxonomie", referencedColumnName="id_taxonomie")
+     * @Groups("repro:read")
      */
     private $id_taxonomie;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="repros")
      * @ORM\JoinColumn(name="nni", referencedColumnName="nni")
+     * @Groups("repro:read")
      */
     private $nni;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur")
      * @ORM\JoinColumn(name="nni_valideur_doc", referencedColumnName="nni")
+     * @Groups("repro:read")
      */
     private $nni_valideur_doc;
 
     /**
      * @ORM\OneToMany(targetEntity="ContientDoc", mappedBy="id_reprographie" , fetch="EAGER")
+     * @Groups("repro:read")
      */
     private $contientDocs;
 
@@ -140,6 +159,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="observations", type="text", nullable=true)
+     * @Groups("repro:read")
      */
     private $observations;
 
@@ -147,6 +167,7 @@ class Reprographie
      * @var string
      *
      * @ORM\Column(name="filigrane", type="string", nullable=true)
+     * @Groups("repro:read")
      */
     private $filigrane;
 
@@ -154,6 +175,7 @@ class Reprographie
      * @var \DateTime
      *
      * @ORM\Column(name="date_mise_en_place", type="datetime", nullable=true)
+     * @Groups("repro:read")
      */
     private $dateMiseEnPlace;
 

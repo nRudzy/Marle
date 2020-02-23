@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Json;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Utilisateur
@@ -29,6 +30,7 @@ class Utilisateur implements UserInterface
      *
      * @ORM\Column(name="nni", type="string", length=10, unique=true, nullable=false)
      * @ORM\Id
+     * @Groups("repro:read")
      */
     private $nni;
 
@@ -50,6 +52,7 @@ class Utilisateur implements UserInterface
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=100, nullable=false)
+     * @Groups("repro:read")
      */
     private $nom;
 
@@ -57,12 +60,14 @@ class Utilisateur implements UserInterface
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=100, nullable=false)
+     * @Groups("repro:read")
      */
     private $prenom;
 
     /**
      * @var json
      * @ORM\Column(name="roles", type="json")
+     * @Groups("repro:read")
      */
     private $roles;
 

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Document
@@ -19,6 +20,7 @@ class Document
      * @ORM\Column(name="id_document", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups("repro:read")
      */
     private $id_document;
 
@@ -32,6 +34,7 @@ class Document
      * @var string
      *
      * @ORM\Column(name="nomDocument", type="string", length=255, nullable=true)
+     * @Groups("repro:read")
      */
     private $nomDocument;
 
@@ -39,6 +42,7 @@ class Document
      * @var string
      *
      * @ORM\Column(name="refDocument", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $refDocument;
 
@@ -46,11 +50,13 @@ class Document
      * @var string
      *
      * @ORM\Column(name="typeDocument", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $typeDocument;
 
     /**
      * @ORM\OneToMany(targetEntity="Docsat", mappedBy="id_document", cascade={"persist"})
+     * @Groups("repro:read")
      */
     private $docsats;
 

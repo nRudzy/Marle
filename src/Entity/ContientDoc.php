@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * ContientDoc
@@ -19,11 +20,13 @@ class ContientDoc
      * @ORM\Column(name="id_contientDocs", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups("repro:read")
      */
     private $id_contientDocs;
 
     /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="id_contientDocs", cascade={"persist"})
+     * @Groups("repro:read")
      */
     private $documents;
 
@@ -37,6 +40,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="nomDocument", type="string", length=255, nullable=true)
+     * @Groups("repro:read")
      */
     private $nomDocument;
 
@@ -44,6 +48,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="refDocument", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $refDocument;
 
@@ -51,6 +56,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="indice", type="string", length=10)
+     * @Groups("repro:read")
      */
     private $indice;
 
@@ -58,6 +64,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="typeDocument", type="string", length=255)
+     * @Groups("repro:read")
      */
     private $typeDocument;
 
@@ -65,6 +72,7 @@ class ContientDoc
      * @var string|null
      *
      * @ORM\Column(name="tampon", type="string", length=100, nullable=true)
+     * @Groups("repro:read")
      */
     private $tampon;
 
@@ -72,6 +80,7 @@ class ContientDoc
      * @var int
      *
      * @ORM\Column(name="nb_exemplaire_a3", type="integer")
+     * @Groups("repro:read")
      */
     private $nbExemplaireA3;
 
@@ -79,6 +88,7 @@ class ContientDoc
      * @var int
      *
      * @ORM\Column(name="nb_exemplaire_a4", type="integer")
+     * @Groups("repro:read")
      */
     private $nbExemplaireA4;
 
@@ -86,6 +96,7 @@ class ContientDoc
      * @var int
      *
      * @ORM\Column(name="nb_exemplaire_a5", type="integer")
+     * @Groups("repro:read")
      */
     private $nbExemplaireA5;
 
@@ -93,6 +104,7 @@ class ContientDoc
      * @var int
      *
      * @ORM\Column(name="nb_exemplaire_a0", type="integer")
+     * @Groups("repro:read")
      */
     private $nbExemplaireA0;
 
@@ -100,6 +112,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="recto_verso", type="string", length=50)
+     * @Groups("repro:read")
      */
     private $rectoVerso;
 
@@ -107,6 +120,7 @@ class ContientDoc
      * @var string
      *
      * @ORM\Column(name="support", type="string", length=50)
+     * @Groups("repro:read")
      */
     private $support;
 
@@ -114,6 +128,7 @@ class ContientDoc
      * @var string|null
      *
      * @ORM\Column(name="nb_trous", type="string", nullable=true)
+     * @Groups("repro:read")
      */
     private $nbTrous;
 
@@ -121,6 +136,7 @@ class ContientDoc
      * @var string|null
      *
      * @ORM\Column(name="reliement", type="string", length=50, nullable=true)
+     * @Groups("repro:read")
      */
     private $reliement;
 
@@ -128,6 +144,7 @@ class ContientDoc
      * @var string|null
      *
      * @ORM\Column(name="agrafes", type="string", nullable=true)
+     * @Groups("repro:read")
      */
     private $agrafes;
 
@@ -135,6 +152,7 @@ class ContientDoc
      * @var bool
      *
      * @ORM\Column(name="pliure", type="boolean")
+     * @Groups("repro:read")
      */
     private $pliure;
 
@@ -142,6 +160,7 @@ class ContientDoc
      * @var bool
      *
      * @ORM\Column(name="massicotage", type="boolean")
+     * @Groups("repro:read")
      */
     private $massicotage;
 
@@ -149,6 +168,7 @@ class ContientDoc
      * @var bool
      *
      * @ORM\Column(name="plastification", type="boolean")
+     * @Groups("repro:read")
      */
     private $plastification;
 
@@ -156,6 +176,7 @@ class ContientDoc
      * @var bool
      *
      * @ORM\Column(name="couleur", type="boolean")
+     * @Groups("repro:read")
      */
     private $couleur;
 

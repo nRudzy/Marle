@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Taxonomie
@@ -19,6 +20,7 @@ class Taxonomie
      * @ORM\Column(name="id_taxonomie", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups("repro:read")
      */
     private $id_taxonomie;
 
@@ -26,6 +28,7 @@ class Taxonomie
      * @var string
      *
      * @ORM\Column(name="codeTaxonomie", type="string", length=10)
+     * @Groups("repro:read")
      */
     private $codeTaxonomie;
 
@@ -33,6 +36,7 @@ class Taxonomie
      * @var string|null
      *
      * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
+     * @Groups("repro:read")
      */
     private $libelle;
 
